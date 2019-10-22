@@ -249,8 +249,9 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     @IBOutlet weak var nonLocalPlayerColorViewWidthConstraint: NSLayoutConstraint!
     
-//    @IBOutlet weak var localPlayerStackView: UIStackView!
+    @IBOutlet weak var localPlayerStackView: UIStackView!
     
+    @IBOutlet weak var nonLocalPlayerStackView: UIStackView!
     
     
     @IBAction func rewind() {
@@ -358,6 +359,9 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         
         localPlayerColorViewWidthConstraint.constant = boardView.pointSize.width
         nonLocalPlayerColorViewWidthConstraint.constant = boardView.pointSize.width
+        
+        localPlayerStackView.layoutIfNeeded()
+        nonLocalPlayerStackView.layoutIfNeeded()
         
         localPlayerNameLabel.font = localPlayerNameLabel.font.withSize(0.66 * localPlayerNameLabel.frame.height)
         localPlayerStatusLabel.font = localPlayerStatusLabel.font.withSize(0.66 * localPlayerStatusLabel.frame.height)
