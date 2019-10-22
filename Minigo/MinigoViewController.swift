@@ -282,16 +282,16 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         fastForwardButton.isEnabled = false
         fastForwardButton.alpha = 0.2
         
-        let horizontalSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(pass(byHandlingGestureRecognizedBy:)))
-        horizontalSwipeGestureRecognizer.direction = [.left,.right]
-
-        let verticalSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(pass(byHandlingGestureRecognizedBy:)))
-        verticalSwipeGestureRecognizer.direction = [.up,.down]
+//        let horizontalSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(pass(byHandlingGestureRecognizedBy:)))
+//        horizontalSwipeGestureRecognizer.direction = [.left,.right]
+//
+//        let verticalSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(pass(byHandlingGestureRecognizedBy:)))
+//        verticalSwipeGestureRecognizer.direction = [.up,.down]
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tap(byHandlingGestureRecognizedBy:)))
 
-        view.addGestureRecognizer(horizontalSwipeGestureRecognizer)
-        view.addGestureRecognizer(verticalSwipeGestureRecognizer)
+//        view.addGestureRecognizer(horizontalSwipeGestureRecognizer)
+//        view.addGestureRecognizer(verticalSwipeGestureRecognizer)
         view.addGestureRecognizer(tapGestureRecognizer)
         
     }
@@ -419,18 +419,18 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
-    @objc private func pass(byHandlingGestureRecognizedBy recognizer: UISwipeGestureRecognizer) {
-        switch recognizer.state {
-        case .ended:
-            if boardIsInCurrentPosition {
-                pass()
-            } else {
-                setBoardToCurrentPosition()
-            }
-            
-        default: break
-        }
-    }
+//    @objc private func pass(byHandlingGestureRecognizedBy recognizer: UISwipeGestureRecognizer) {
+//        switch recognizer.state {
+//        case .ended:
+//            if boardIsInCurrentPosition {
+//                pass()
+//            } else {
+//                setBoardToCurrentPosition()
+//            }
+//
+//        default: break
+//        }
+//    }
     
     private func pass() {
         if localPlayerCanMakeTurn {
