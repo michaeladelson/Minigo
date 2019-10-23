@@ -73,10 +73,14 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     }
 
     private var localPlayerColor: MinigoGame.Player? {
-        if currentMatch?.localParticipant?.player?.gamePlayerID == blackPlayerID {
-            return .black
-        } else if currentMatch?.localParticipant?.player?.gamePlayerID == whitePlayerID {
-            return .white
+        if let localPlayerID = currentMatch?.localParticipant?.player?.gamePlayerID {
+            if localPlayerID == blackPlayerID {
+                return .black
+            } else if localPlayerID == whitePlayerID {
+                return .white
+            } else {
+                return nil
+            }
         } else {
             return nil
         }
@@ -110,10 +114,14 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     }
     
     private var nonLocalPlayerColor: MinigoGame.Player? {
-        if currentMatch?.localParticipant?.player?.gamePlayerID == blackPlayerID {
-            return .white
-        } else if currentMatch?.localParticipant?.player?.gamePlayerID == whitePlayerID {
-            return .black
+        if let localPlayerID = currentMatch?.localParticipant?.player?.gamePlayerID {
+            if localPlayerID == blackPlayerID {
+                return .white
+            } else if localPlayerID == whitePlayerID {
+                return .black
+            } else {
+                return nil
+            }
         } else {
             return nil
         }
@@ -277,6 +285,11 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("localPlayerColor == nil: \(localPlayerColor == nil)")
+        print("currentMatch == nil: \(currentMatch == nil)")
+        print("blackPlayerID == whitePlayerID: \(blackPlayerID == whitePlayerID)")
+        print("nil == nil: \(nil == nil)")
         
         rewindButton.isEnabled = false
         rewindButton.alpha = 0.2
