@@ -87,25 +87,25 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     }
     
     private var localPlayerStatus: String? {
-        if let localPlayerMatchOutcome = currentMatch?.localParticipant?.matchOutcome {
-            switch localPlayerMatchOutcome {
-            case .won:
-                return "You Won"
-            case .lost:
-                return "You Lost"
-            case .tied:
-                return "You Tied"
-            case .none:
-                if let currentPlayer = currentMatch?.currentParticipant?.player {
-                    if GKLocalPlayer.local == currentPlayer  {
+        if let match = currentMatch {
+            if let localPlayerMatchOutcome = match.localParticipant?.matchOutcome {
+                switch localPlayerMatchOutcome {
+                case .won:
+                    return "You Won"
+                case .lost:
+                    return "You Lost"
+                case .tied:
+                    return "You Tied"
+                case .none:
+                    if GKLocalPlayer.local == currentMatch?.currentParticipant?.player  {
                         return "Your Turn"
                     } else {
                         return ""
                     }
-                } else {
+                default:
                     return nil
                 }
-            default:
+            } else {
                 return nil
             }
         } else {
