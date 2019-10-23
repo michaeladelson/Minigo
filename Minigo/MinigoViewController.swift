@@ -150,14 +150,10 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             case .tied:
                 return "They Tied"
             case .none:
-                if let currentPlayer = currentMatch?.currentParticipant?.player {
-                    if GKLocalPlayer.local != currentPlayer  {
-                        return "Their Turn"
-                    } else {
-                        return ""
-                    }
+                if GKLocalPlayer.local != currentMatch?.currentParticipant?.player  {
+                    return "Their Turn"
                 } else {
-                    return nil
+                    return ""
                 }
             default:
                 return nil
