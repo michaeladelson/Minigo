@@ -60,18 +60,10 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         return whiteParticipant?.player
     }
     
-    var blackPlayerName: String? {
-        return blackPlayer?.displayName
-    }
-    
-    var whitePlayerName: String? {
-        return whitePlayer?.displayName
-    }
-    
     private var localPlayerName: String? {
         if let match = currentMatch {
-            if match.localParticipant?.player?.displayName != nil {
-                return currentMatch?.localParticipant?.player?.displayName
+            if let name = match.localParticipant?.player?.displayName {
+                return name
             } else {
                 return "Anonoymous"
             }
@@ -104,10 +96,14 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             case .tied:
                 return "You Tied"
             case .none:
-                if GKLocalPlayer.local == currentMatch?.currentParticipant?.player {
-                    return "Your Turn"
+                if let currentPlayer = currentMatch?.currentParticipant?.player {
+                    if GKLocalPlayer.local == currentPlayer  {
+                        return "Your Turn"
+                    } else {
+                        return ""
+                    }
                 } else {
-                    return ""
+                    return nil
                 }
             default:
                 return nil
@@ -119,8 +115,8 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     private var nonLocalPlayerName: String? {
         if let match = currentMatch {
-            if match.nonLocalParticipants.first?.player?.displayName != nil {
-                return currentMatch?.localParticipant?.player?.displayName
+            if let name = match.nonLocalParticipants.first?.player?.displayName {
+                return name
             } else {
                 return "Anonoymous"
             }
@@ -143,7 +139,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
-    //needs to be reviewed
+
     private var nonLocalPlayerStatus: String? {
         if let nonLocalPlayerMatchOutcome = currentMatch?.nonLocalParticipants.first?.matchOutcome {
             switch nonLocalPlayerMatchOutcome {
@@ -154,19 +150,27 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             case .tied:
                 return "They Tied"
             case .none:
-                if GKLocalPlayer.local != currentMatch?.currentParticipant?.player  {
-                    return "Their Turn"
+                if let currentPlayer = currentMatch?.currentParticipant?.player {
+                    if GKLocalPlayer.local != currentPlayer  {
+                        return "Their Turn"
+                    } else {
+                        return ""
+                    }
                 } else {
-                    return ""
+                    return nil
                 }
             default:
                 return nil
             }
         } else {
-            if GKLocalPlayer.local != currentMatch?.currentParticipant?.player  {
-                return "Their Turn"
+            if let currentPlayer = currentMatch?.currentParticipant?.player {
+                if GKLocalPlayer.local != currentPlayer {
+                    return "Their Turn"
+                } else {
+                    return ""
+                }
             } else {
-                return ""
+                return nil
             }
         }
     }
@@ -190,9 +194,6 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         set {
             blackPlayerID = newValue.blackPlayerID
             whitePlayerID = newValue.whitePlayerID
-            
-            print("blackPlayerName: \(blackPlayerName ?? "")")
-            print("whitePlayerName: \(whitePlayerName ?? "")")
             
             minigoGame.moveHistory = newValue.minigoMoveHistory
             
@@ -374,8 +375,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         print("GKLocalPlayer.local.isAuthenticated: \(GKLocalPlayer.local.isAuthenticated)")  //just for testing
         
         print("localPlayerDisplayName: \(GKLocalPlayer.local.displayName)")
-        print("blackPlayerName: \(blackPlayerName ?? "anonymous")")
-        print("whitePlayerName: \(whitePlayerName ?? "anonymous")")
+        
         if let match = currentMatch {
             print(match.status.rawValue)
         }
