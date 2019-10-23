@@ -69,7 +69,15 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     }
     
     private var localPlayerName: String? {
-        return currentMatch?.localParticipant?.player?.displayName
+        if let match = currentMatch {
+            if match.localParticipant?.player?.displayName != nil {
+                return currentMatch?.localParticipant?.player?.displayName
+            } else {
+                return "Anonoymous"
+            }
+        } else {
+            return nil
+        }
     }
 
     private var localPlayerColor: MinigoGame.Player? {
@@ -110,7 +118,15 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     }
     
     private var nonLocalPlayerName: String? {
-        return currentMatch?.nonLocalParticipants.first?.player?.displayName
+        if let match = currentMatch {
+            if match.nonLocalParticipants.first?.player?.displayName != nil {
+                return currentMatch?.localParticipant?.player?.displayName
+            } else {
+                return "Anonoymous"
+            }
+        } else {
+            return nil
+        }
     }
     
     private var nonLocalPlayerColor: MinigoGame.Player? {
@@ -175,8 +191,8 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             blackPlayerID = newValue.blackPlayerID
             whitePlayerID = newValue.whitePlayerID
             
-            print("blackPlayerName: \(blackPlayerName ?? "Anonoymous")")
-            print("whitePlayerName: \(whitePlayerName ?? "Anonoymous")")
+            print("blackPlayerName: \(blackPlayerName ?? "")")
+            print("whitePlayerName: \(whitePlayerName ?? "")")
             
             minigoGame.moveHistory = newValue.minigoMoveHistory
             
@@ -511,12 +527,12 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     }
     
     private func updateViewFromModel() {
-        localPlayerNameLabel.text = localPlayerName ?? "Anonoymous"
+        localPlayerNameLabel.text = localPlayerName ?? ""
         localPlayerStatusLabel.text = localPlayerStatus ?? ""
         localPlayerColorView.color = pointColor(for: localPlayerColor ?? .none)
         //localPlayerColorView.frame.size = boardView.pointSize
         
-        nonLocalPlayerNameLabel.text = nonLocalPlayerName ?? "Anonoymous"
+        nonLocalPlayerNameLabel.text = nonLocalPlayerName ?? ""
         nonLocalPlayerStatusLabel.text = nonLocalPlayerStatus ?? ""
         nonLocalPlayerColorView.color = pointColor(for: nonLocalPlayerColor ?? .none)
         //nonLocalPlayerColorView.frame.size = boardView.pointSize
