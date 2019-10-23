@@ -164,10 +164,10 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             }
         } else {
             if let currentPlayer = currentMatch?.currentParticipant?.player {
-                if GKLocalPlayer.local != currentPlayer {
-                    return "Their Turn"
-                } else {
+                if GKLocalPlayer.local == currentPlayer {
                     return ""
+                } else {
+                    return "Their Turn"
                 }
             } else {
                 return nil
