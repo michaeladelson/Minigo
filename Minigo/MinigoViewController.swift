@@ -326,6 +326,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             queue: OperationQueue.main) { notification in
                 if GKLocalPlayer.local.isAuthenticated {
                     GKLocalPlayer.local.register(self)
+                    self.setPlayerIDs()
                     self.presentGKTurnBasedMatchmakerViewController()
                 } else {
                     GKLocalPlayer.local.unregisterAllListeners()
@@ -373,6 +374,8 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         print(localPlayerStatus ?? "")
         print(nonLocalPlayerStatus ?? "")
         print("localPlayerNameLabel.adjustsFontSizeToFitWidth: \(localPlayerNameLabel.adjustsFontSizeToFitWidth)")
+        
+        print("blackPlayerID == nil: \(blackPlayerID == nil)")
         
         super.viewDidLayoutSubviews()
         boardView.frame = boardViewContainer.bounds
@@ -500,7 +503,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     
     private func setPlayerIDs() {
-        if GKLocalPlayer.local.isAuthenticated && currentMatch?.status != GKTurnBasedMatch.Status.ended && currentMatch?.status != GKTurnBasedMatch.Status.unknown {
+        if currentMatch?.status != GKTurnBasedMatch.Status.ended && currentMatch?.status != GKTurnBasedMatch.Status.unknown {
             if GKLocalPlayer.local == currentMatch?.currentParticipant?.player {
                 if minigoGame.currentPlayer == .black {
                     blackPlayerID = GKLocalPlayer.local.gamePlayerID
