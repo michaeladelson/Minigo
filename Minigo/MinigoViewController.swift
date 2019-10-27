@@ -469,22 +469,28 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         let minigoMoveHistory: [MinigoGame.Point?]
     }
     
-    // MARK: Application Lifecycle methods
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    private func setAuthenticationHandler() {
         GKLocalPlayer.local.authenticateHandler = { (vc, err) in
             print("d")
             if let authVC = vc {
                 print("a")
-                self.present(authVC, animated: true, completion: nil)
+                print("vc != nil: \(vc != nil)")
+                print("self.definesPresentationContext: \(self.definesPresentationContext)")
+                self.present(authVC, animated: true, completion: {print("test test test")})
             } else if GKLocalPlayer.local.isAuthenticated {
                 print("b")
             } else {
                 print("c")
             }
         }
+    }
+    
+    // MARK: Application Lifecycle methods
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setAuthenticationHandler()
         
         print("localPlayerColor == nil: \(localPlayerColor == nil)")
         print("currentMatch == nil: \(currentMatch == nil)")
@@ -519,7 +525,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
                 if GKLocalPlayer.local.isAuthenticated {
                     GKLocalPlayer.local.register(self)
                     self.setPlayerIDs()
-                    self.presentGKTurnBasedMatchmakerViewController()
+//                    self.presentGKTurnBasedMatchmakerViewController()
                 } else {
                     GKLocalPlayer.local.unregisterAllListeners()
                 }
@@ -531,6 +537,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         super.viewWillDisappear(animated)
         if let observer = authenticationChangedObserver {
             NotificationCenter.default.removeObserver(observer)
+            authenticationChangedObserver = nil
         }
     }
     
