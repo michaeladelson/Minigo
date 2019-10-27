@@ -23,17 +23,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
               // Enable or disable features based on authorization.
            }
         
-        GKLocalPlayer.local.authenticateHandler = { (vc, err) in
-            print("d")
-            if let authVC = vc {
-                print("a")
-                self.window?.rootViewController?.present(authVC, animated: true, completion: nil)
-            } else if GKLocalPlayer.local.isAuthenticated {
-                print("b")
-            } else {
-                print("c")
-            }
-        }
+//        GKLocalPlayer.local.authenticateHandler = { (vc, err) in
+//            print("d")
+//            if let authVC = vc {
+//                print("a")
+//                self.window?.rootViewController?.contents.present(authVC, animated: true, completion: nil)
+//            } else if GKLocalPlayer.local.isAuthenticated {
+//                print("b")
+//            } else {
+//                print("c")
+//            }
+//        }
         
         return true
     }

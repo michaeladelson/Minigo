@@ -291,56 +291,9 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     }
 
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        print("localPlayerColor == nil: \(localPlayerColor == nil)")
-        print("currentMatch == nil: \(currentMatch == nil)")
-        print("blackPlayerID == whitePlayerID: \(blackPlayerID == whitePlayerID)")
-        print("nil == nil: \(nil == nil)")
-        
-        rewindButton.isEnabled = false
-        rewindButton.alpha = 0.2
-        fastForwardButton.isEnabled = false
-        fastForwardButton.alpha = 0.2
-        
-//        let horizontalSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(pass(byHandlingGestureRecognizedBy:)))
-//        horizontalSwipeGestureRecognizer.direction = [.left,.right]
-//
-//        let verticalSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(pass(byHandlingGestureRecognizedBy:)))
-//        verticalSwipeGestureRecognizer.direction = [.up,.down]
-        
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tap(byHandlingGestureRecognizedBy:)))
 
-//        view.addGestureRecognizer(horizontalSwipeGestureRecognizer)
-//        view.addGestureRecognizer(verticalSwipeGestureRecognizer)
-        view.addGestureRecognizer(tapGestureRecognizer)
-        
-    }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        authenticationChangedObserver = NotificationCenter.default.addObserver(
-            forName: .GKPlayerAuthenticationDidChangeNotificationName,
-            object: nil,
-            queue: OperationQueue.main) { notification in
-                if GKLocalPlayer.local.isAuthenticated {
-                    GKLocalPlayer.local.register(self)
-                    self.setPlayerIDs()
-                    self.presentGKTurnBasedMatchmakerViewController()
-                } else {
-                    GKLocalPlayer.local.unregisterAllListeners()
-                }
-            }
-        updateViewFromModel()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if let observer = authenticationChangedObserver {
-            NotificationCenter.default.removeObserver(observer)
-        }
-    }
+
     
     private func presentGKTurnBasedMatchmakerViewController() {
         let request = GKMatchRequest()
@@ -353,61 +306,11 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         self.present(matchmakerViewController, animated: true, completion: nil)
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-//        localPlayerColorViewWidthConstraint.constant = boardView.pointSize.width
-//        nonLocalPlayerColorViewWidthConstraint.constant = boardView.pointSize.width
-        
-        
-    }
-    
-    override func viewDidLayoutSubviews() {
-        //the following prints are for testing
-        print("localPlayerCanMakeTurn: \(localPlayerCanMakeTurn)") //just for testing
-        print("GKLocalPlayer.local.isAuthenticated: \(GKLocalPlayer.local.isAuthenticated)")  //just for testing
-        
-        print("localPlayerDisplayName: \(GKLocalPlayer.local.displayName)")
-        
-        if let match = currentMatch {
-            print(match.status.rawValue)
-        }
-        print(localPlayerStatus ?? "")
-        print(nonLocalPlayerStatus ?? "")
-        print("localPlayerNameLabel.adjustsFontSizeToFitWidth: \(localPlayerNameLabel.adjustsFontSizeToFitWidth)")
-        
-        print("blackPlayerID == nil: \(blackPlayerID == nil)")
-        
-        super.viewDidLayoutSubviews()
-        boardView.frame = boardViewContainer.bounds
-        
-        localPlayerColorViewWidthConstraint.constant = boardView.pointSize.width
-        nonLocalPlayerColorViewWidthConstraint.constant = boardView.pointSize.width
-        
-        localPlayerStackView.layoutIfNeeded()
-        nonLocalPlayerStackView.layoutIfNeeded()
-        
-        localPlayerNameLabel.font = localPlayerNameLabel.font.withSize(0.66 * localPlayerNameLabel.frame.height)
-        localPlayerStatusLabel.font = localPlayerStatusLabel.font.withSize(0.66 * localPlayerStatusLabel.frame.height)
-        
-        nonLocalPlayerNameLabel.font = nonLocalPlayerNameLabel.font.withSize(0.66 * nonLocalPlayerNameLabel.frame.height)
-        nonLocalPlayerStatusLabel.font = nonLocalPlayerStatusLabel.font.withSize(0.66 * nonLocalPlayerStatusLabel.frame.height)
-        
-        
 
-        
-    }
     
-    func didSelectPointAt(row: Int, column: Int) {
-        if localPlayerCanMakeTurn && boardIsInCurrentPosition {
-            let moveWasSuccessful = minigoGame.placeStoneAt(x: row, y: column)
-            if moveWasSuccessful {
-                endTurn()
-            }
-            setBoardToCurrentPosition()
-        } else if !boardIsInCurrentPosition {
-            setBoardToCurrentPosition()
-        }
-    }
+
+    
+
     
     private func endTurn() {
         guard let match = currentMatch else {
@@ -421,19 +324,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             completionHandler: nil)
     }
     
-    func getColorForPointAt(row: Int, column: Int) -> BoardViewPoint.PointColor {
-        let pieceColor = minigoGame.boardHistory[turnNumberToDisplay][row][column]
-            //minigoGame.board[row][column]
-        
-        switch pieceColor {
-        case .black:
-            return .black
-        case .white:
-            return .white
-        case .none:
-            return .none
-        }
-    }
+
     
     @objc private func tap(byHandlingGestureRecognizedBy recognizer: UITapGestureRecognizer) {
         switch recognizer.state {
@@ -578,6 +469,138 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         let minigoMoveHistory: [MinigoGame.Point?]
     }
     
+    // MARK: Application Lifecycle methods
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        GKLocalPlayer.local.authenticateHandler = { (vc, err) in
+            print("d")
+            if let authVC = vc {
+                print("a")
+                self.present(authVC, animated: true, completion: nil)
+            } else if GKLocalPlayer.local.isAuthenticated {
+                print("b")
+            } else {
+                print("c")
+            }
+        }
+        
+        print("localPlayerColor == nil: \(localPlayerColor == nil)")
+        print("currentMatch == nil: \(currentMatch == nil)")
+        print("blackPlayerID == whitePlayerID: \(blackPlayerID == whitePlayerID)")
+        print("nil == nil: \(nil == nil)")
+        
+        rewindButton.isEnabled = false
+        rewindButton.alpha = 0.2
+        fastForwardButton.isEnabled = false
+        fastForwardButton.alpha = 0.2
+        
+//        let horizontalSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(pass(byHandlingGestureRecognizedBy:)))
+//        horizontalSwipeGestureRecognizer.direction = [.left,.right]
+//
+//        let verticalSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(pass(byHandlingGestureRecognizedBy:)))
+//        verticalSwipeGestureRecognizer.direction = [.up,.down]
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tap(byHandlingGestureRecognizedBy:)))
+
+//        view.addGestureRecognizer(horizontalSwipeGestureRecognizer)
+//        view.addGestureRecognizer(verticalSwipeGestureRecognizer)
+        view.addGestureRecognizer(tapGestureRecognizer)
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        authenticationChangedObserver = NotificationCenter.default.addObserver(
+            forName: .GKPlayerAuthenticationDidChangeNotificationName,
+            object: nil,
+            queue: OperationQueue.main) { notification in
+                if GKLocalPlayer.local.isAuthenticated {
+                    GKLocalPlayer.local.register(self)
+                    self.setPlayerIDs()
+                    self.presentGKTurnBasedMatchmakerViewController()
+                } else {
+                    GKLocalPlayer.local.unregisterAllListeners()
+                }
+            }
+        updateViewFromModel()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let observer = authenticationChangedObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+//        localPlayerColorViewWidthConstraint.constant = boardView.pointSize.width
+//        nonLocalPlayerColorViewWidthConstraint.constant = boardView.pointSize.width
+    }
+    
+    override func viewDidLayoutSubviews() {
+        //the following prints are for testing
+        print("localPlayerCanMakeTurn: \(localPlayerCanMakeTurn)") //just for testing
+        print("GKLocalPlayer.local.isAuthenticated: \(GKLocalPlayer.local.isAuthenticated)")  //just for testing
+        
+        print("localPlayerDisplayName: \(GKLocalPlayer.local.displayName)")
+        
+        if let match = currentMatch {
+            print(match.status.rawValue)
+        }
+        print(localPlayerStatus ?? "")
+        print(nonLocalPlayerStatus ?? "")
+        print("localPlayerNameLabel.adjustsFontSizeToFitWidth: \(localPlayerNameLabel.adjustsFontSizeToFitWidth)")
+        
+        print("blackPlayerID == nil: \(blackPlayerID == nil)")
+        
+        super.viewDidLayoutSubviews()
+        boardView.frame = boardViewContainer.bounds
+        
+        localPlayerColorViewWidthConstraint.constant = boardView.pointSize.width
+        nonLocalPlayerColorViewWidthConstraint.constant = boardView.pointSize.width
+        
+        localPlayerStackView.layoutIfNeeded()
+        nonLocalPlayerStackView.layoutIfNeeded()
+        
+        localPlayerNameLabel.font = localPlayerNameLabel.font.withSize(0.66 * localPlayerNameLabel.frame.height)
+        localPlayerStatusLabel.font = localPlayerStatusLabel.font.withSize(0.66 * localPlayerStatusLabel.frame.height)
+        
+        nonLocalPlayerNameLabel.font = nonLocalPlayerNameLabel.font.withSize(0.66 * nonLocalPlayerNameLabel.frame.height)
+        nonLocalPlayerStatusLabel.font = nonLocalPlayerStatusLabel.font.withSize(0.66 * nonLocalPlayerStatusLabel.frame.height)
+        
+    }
+    
+    // MARK: BoardViewDelegate methods
+    
+    func getColorForPointAt(row: Int, column: Int) -> BoardViewPoint.PointColor {
+        let pieceColor = minigoGame.boardHistory[turnNumberToDisplay][row][column]
+        
+        switch pieceColor {
+        case .black:
+            return .black
+        case .white:
+            return .white
+        case .none:
+            return .none
+        }
+    }
+    
+    func didSelectPointAt(row: Int, column: Int) {
+        if localPlayerCanMakeTurn && boardIsInCurrentPosition {
+            let moveWasSuccessful = minigoGame.placeStoneAt(x: row, y: column)
+            if moveWasSuccessful {
+                endTurn()
+            }
+            setBoardToCurrentPosition()
+        } else if !boardIsInCurrentPosition {
+            setBoardToCurrentPosition()
+        }
+    }
+    
+    
     // MARK: GKTurnBasedMatchmakerViewControllerDelegate methods
     
     
@@ -643,6 +666,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     }
 }
 
+
 extension GKTurnBasedMatch
 {
     var nonCurrentParticipants: [GKTurnBasedParticipant] {
@@ -658,4 +682,5 @@ extension GKTurnBasedMatch
         return localParticipants.first
     }
 }
+
 
