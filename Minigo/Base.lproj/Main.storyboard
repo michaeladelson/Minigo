@@ -20,7 +20,7 @@
                                 <rect key="frame" x="0.0" y="245.66666666666663" width="375" height="375"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" priority="750" constant="375" id="3x1-3l-avL"/>
+                                    <constraint firstAttribute="width" priority="750" constant="4000" id="3x1-3l-avL"/>
                                     <constraint firstAttribute="width" secondItem="74Q-Ha-bS0" secondAttribute="height" multiplier="1:1" id="iLC-dE-HyT"/>
                                 </constraints>
                             </view>
@@ -28,10 +28,10 @@
                                 <rect key="frame" x="0.0" y="620.66666666666663" width="375" height="157.33333333333337"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="redraw" axis="vertical" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="dLU-g1-Gi9">
-                                        <rect key="frame" x="112" y="19.999999999999993" width="151" height="117.33333333333331"/>
+                                        <rect key="frame" x="97.333333333333329" y="19.999999999999993" width="180.33333333333337" height="117.33333333333331"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mng-ET-xBx" customClass="MinigoButton" customModule="Minigo" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="151" height="54.666666666666664"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="180.33333333333334" height="54.666666666666664"/>
                                                 <color key="backgroundColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                                 <state key="normal" title="Pass">
@@ -42,10 +42,10 @@
                                                 </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="redraw" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NXw-Qe-LUx">
-                                                <rect key="frame" x="0.0" y="62.666666666666742" width="151" height="54.666666666666657"/>
+                                                <rect key="frame" x="0.0" y="62.666666666666742" width="180.33333333333334" height="54.666666666666657"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mJS-6c-KGA" customClass="MinigoButton" customModule="Minigo" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="45" height="54.666666666666664"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="54.666666666666664" height="54.666666666666664"/>
                                                         <color key="backgroundColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                                         <state key="normal" title="◀︎">
@@ -56,13 +56,16 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🕒" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TUn-Qg-EGk">
-                                                        <rect key="frame" x="53" y="0.0" width="45" height="54.666666666666664"/>
+                                                        <rect key="frame" x="62.666666666666671" y="0.0" width="55" height="54.666666666666664"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" secondItem="TUn-Qg-EGk" secondAttribute="height" multiplier="1:1" id="38y-N1-7Yi"/>
+                                                        </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N4L-x6-ccW" customClass="MinigoButton" customModule="Minigo" customModuleProvider="target">
-                                                        <rect key="frame" x="106" y="0.0" width="45" height="54.666666666666664"/>
+                                                        <rect key="frame" x="125.66666666666667" y="0.0" width="54.666666666666671" height="54.666666666666664"/>
                                                         <color key="backgroundColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                                         <state key="normal" title="▶︎">
@@ -83,8 +86,8 @@
                                     <constraint firstItem="dLU-g1-Gi9" firstAttribute="centerY" secondItem="Fys-MQ-nz7" secondAttribute="centerY" id="91z-oq-4hI"/>
                                     <constraint firstItem="dLU-g1-Gi9" firstAttribute="centerX" secondItem="Fys-MQ-nz7" secondAttribute="centerX" id="Dzw-3V-Fp6"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dLU-g1-Gi9" secondAttribute="trailing" constant="20" symbolic="YES" id="IKR-vD-2v0"/>
-                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="dLU-g1-Gi9" secondAttribute="bottom" constant="20" symbolic="YES" id="aq0-BE-G6K"/>
-                                    <constraint firstItem="dLU-g1-Gi9" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Fys-MQ-nz7" secondAttribute="top" constant="20" symbolic="YES" id="kXt-vL-mn2"/>
+                                    <constraint firstAttribute="bottom" secondItem="dLU-g1-Gi9" secondAttribute="bottom" constant="20" symbolic="YES" id="aq0-BE-G6K"/>
+                                    <constraint firstItem="dLU-g1-Gi9" firstAttribute="top" secondItem="Fys-MQ-nz7" secondAttribute="top" constant="20" symbolic="YES" id="kXt-vL-mn2"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y67-3c-rgO">

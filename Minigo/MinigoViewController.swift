@@ -639,10 +639,14 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         print("receivedTurnEvent. didBecomeActive: \(didBecomeActive)")
         
         if let matchmakerVC = currentMatchmakerViewController, didBecomeActive {
-          currentMatchmakerViewController = nil
-          matchmakerVC.dismiss(animated: true)
+            currentMatchmakerViewController = nil
+            matchmakerVC.dismiss(animated: true)
         }
-        loadMatchData(match: match)
+        
+        if didBecomeActive {
+            loadMatchData(match: match)
+        }
+//        loadMatchData(match: match)
         print("localPlayerCanMakeTurn: \(localPlayerCanMakeTurn)")
         //print("match.localParticipant?.matchOutcome: \(match.localParticipant?.matchOutcome.rawValue)")
         
