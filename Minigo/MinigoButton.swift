@@ -12,10 +12,22 @@ class MinigoButton: UIButton {
 
     override var isHighlighted: Bool {
         didSet {
-            if isHighlighted {
-                self.alpha = 0.2
+            if isEnabled {
+                if isHighlighted {
+                    self.alpha = 0.2
+                } else {
+                    self.alpha = 1.0
+                }
+            }
+        }
+    }
+    
+    override var isEnabled: Bool {
+        didSet {
+            if isEnabled {
+                self.alpha = 1.0
             } else {
-                self.alpha = self.isEnabled ? 1.0 : 0.2
+                self.alpha = 2.0
             }
         }
     }
