@@ -269,6 +269,11 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     @IBOutlet weak var nonLocalPlayerStackView: UIStackView!
     
+    @IBOutlet weak var clockEmojiLabel: UILabel!
+    
+    
+    @IBOutlet weak var buttonStackView: UIStackView!
+    
     
     @IBAction func rewind() {
         if turnNumberToDisplay > 0 {
@@ -577,6 +582,10 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         
         nonLocalPlayerNameLabel.font = nonLocalPlayerNameLabel.font.withSize(0.66 * nonLocalPlayerNameLabel.frame.height)
         nonLocalPlayerStatusLabel.font = nonLocalPlayerStatusLabel.font.withSize(0.66 * nonLocalPlayerStatusLabel.frame.height)
+        
+        buttonStackView.layoutIfNeeded()
+        
+        clockEmojiLabel.font = clockEmojiLabel.font.withSize(0.9 * clockEmojiLabel.frame.height)
         
     }
     

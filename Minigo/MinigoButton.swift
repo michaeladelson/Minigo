@@ -20,5 +20,13 @@ class MinigoButton: UIButton {
         }
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if titleLabel != nil {
+            titleLabel!.font = titleLabel!.font.withSize(0.66 * frame.height)
+        }
+    }
+    
 
 }

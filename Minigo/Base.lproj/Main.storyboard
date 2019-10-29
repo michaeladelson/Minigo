@@ -55,7 +55,7 @@
                                                             <action selector="rewind" destination="BYZ-38-t0r" eventType="touchUpInside" id="LqO-G8-RfF"/>
                                                         </connections>
                                                     </button>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🕒" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TUn-Qg-EGk">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🕒" textAlignment="center" lineBreakMode="tailTruncation" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="TUn-Qg-EGk">
                                                         <rect key="frame" x="62.666666666666671" y="0.0" width="55" height="54.666666666666664"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="TUn-Qg-EGk" secondAttribute="height" multiplier="1:1" id="38y-N1-7Yi"/>
@@ -189,6 +189,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="boardViewContainer" destination="74Q-Ha-bS0" id="XTq-8d-Tp5"/>
+                        <outlet property="buttonStackView" destination="dLU-g1-Gi9" id="x19-Ri-Oov"/>
+                        <outlet property="clockEmojiLabel" destination="TUn-Qg-EGk" id="PEa-dF-YWv"/>
                         <outlet property="fastForwardButton" destination="N4L-x6-ccW" id="Fjs-bd-iTm"/>
                         <outlet property="localPlayerColorView" destination="UDq-l6-yhc" id="npe-89-liY"/>
                         <outlet property="localPlayerColorViewWidthConstraint" destination="5FE-bb-Kwa" id="Xhv-G1-vWb"/>
