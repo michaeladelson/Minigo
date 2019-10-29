@@ -431,19 +431,15 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         
         if turnNumberToDisplay == 0 {
             rewindButton.isEnabled = false
-            rewindButton.alpha = 0.2
             print("rewindButton.alpha: \(rewindButton.alpha)")
         } else {
             rewindButton.isEnabled = true
-            rewindButton.alpha = 1.0
         }
         
         if turnNumberToDisplay == minigoGame.turnCount {
             fastForwardButton.isEnabled = false
-            fastForwardButton.alpha = 0.2
         } else {
             fastForwardButton.isEnabled = true
-            fastForwardButton.alpha = 1.0
         }
         
     }

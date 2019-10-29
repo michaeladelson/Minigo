@@ -27,7 +27,7 @@ class MinigoButton: UIButton {
             if isEnabled {
                 self.alpha = 1.0
             } else {
-                self.alpha = 2.0
+                self.alpha = 0.2
             }
         }
     }
