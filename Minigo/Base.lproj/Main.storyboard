@@ -27,7 +27,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fys-MQ-nz7">
                                 <rect key="frame" x="0.0" y="620.66666666666663" width="375" height="157.33333333333337"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="redraw" axis="vertical" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="dLU-g1-Gi9">
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="dLU-g1-Gi9">
                                         <rect key="frame" x="97.333333333333329" y="19.999999999999993" width="180.33333333333337" height="117.33333333333331"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mng-ET-xBx" customClass="MinigoButton" customModule="Minigo" customModuleProvider="target">
@@ -41,7 +41,7 @@
                                                     <action selector="pass:" destination="BYZ-38-t0r" eventType="touchUpInside" id="faz-QG-Out"/>
                                                 </connections>
                                             </button>
-                                            <stackView opaque="NO" contentMode="redraw" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NXw-Qe-LUx">
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NXw-Qe-LUx">
                                                 <rect key="frame" x="0.0" y="62.666666666666742" width="180.33333333333334" height="54.666666666666657"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mJS-6c-KGA" customClass="MinigoButton" customModule="Minigo" customModuleProvider="target">
