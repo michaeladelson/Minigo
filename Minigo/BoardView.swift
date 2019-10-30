@@ -99,7 +99,6 @@ class BoardView: UIView {
         super.layoutSubviews()
         for i in 0..<points.count {
             for j in 0..<points[i].count {
-                
                 points[i][j].frame.size = pointSize
                 points[i][j].center = upperLeftCorner.offset(by: CGPoint(x: CGFloat(j) * lineSpacingWidthWise,
                                                                          y: CGFloat(i) * lineSpacingHeightWise))

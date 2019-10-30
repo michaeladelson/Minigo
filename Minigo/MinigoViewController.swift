@@ -648,7 +648,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             matchmakerVC.dismiss(animated: true)
         }
         
-        if didBecomeActive {
+        if didBecomeActive || currentMatch?.matchID == match.matchID {
             loadMatchData(match: match)
         }
         
