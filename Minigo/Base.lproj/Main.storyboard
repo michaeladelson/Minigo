@@ -189,6 +189,7 @@
                                 <action selector="selectMatch:" destination="BYZ-38-t0r" id="82Z-I8-1q0"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Resign" id="tgr-X0-ljp"/>
                     </navigationItem>
                     <connections>
                         <outlet property="boardViewContainer" destination="74Q-Ha-bS0" id="XTq-8d-Tp5"/>

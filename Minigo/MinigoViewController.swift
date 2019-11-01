@@ -301,6 +301,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
 
     
     private func presentGKTurnBasedMatchmakerViewController() {
+        print("presentGKTurnBasedMatchmakerViewController")
         let request = GKMatchRequest()
         request.minPlayers = 2
         request.maxPlayers = 2

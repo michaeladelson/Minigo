@@ -69,28 +69,6 @@ struct MinigoGame
         }
     }
     
-
-    
-//    var moveHistoryData: Data? {
-//        get {
-//            return try? JSONEncoder().encode(moveHistory)
-//        }
-//
-//        set {
-//            currentPlayer = Player.black
-//            passCount = 0
-//            resetBoard()
-//            moveHistory = [Point?]()
-//            boardHistory = [[[Player]]]()
-//            boardHistory.append(board)
-//
-//            if let data = newValue, let moves = try? JSONDecoder().decode([Point?].self, from: data) {
-//                for point in moves {
-//                    _ = placeStoneAt(point: point)
-//                }
-//            }
-//        }
-//    }
     
     var turnCount: Int {
         return _moveHistory.count
