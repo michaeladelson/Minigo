@@ -295,9 +295,9 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
 
-    
-
-    
+    @IBAction func resignLocalPlayer(_ sender: UIBarButtonItem) {
+        resignLocalPlayer()
+    }
 
     
     private func presentGKTurnBasedMatchmakerViewController() {
@@ -487,6 +487,26 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
+    func resignLocalPlayer() {
+        if let match = currentMatch {
+            if let localParticipant = match.localParticipant {
+                if localParticipant == match.currentParticipant {
+                    localParticipant.matchOutcome = .lost
+                    
+                    for participant in match.nonLocalParticipants {
+                        participant.matchOutcome = .won
+                    }
+                    
+                    match.endMatchInTurn(withMatch: match.matchData ?? Data())
+                } else {
+                    match.participantQuitOutOfTurn(with: .quit, withCompletionHandler: nil)
+                }
+            }
+        }
+        
+        updateViewFromModel()
+    }
+    
     // MARK: Application Lifecycle methods
     
     override func viewDidLoad() {
@@ -666,6 +686,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
                 match.currentParticipant?.matchOutcome = .won
                 
                 match.endMatchInTurn(withMatch: match.matchData ?? Data())
+                updateViewFromModel()
             }
             
         }
