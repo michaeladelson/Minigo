@@ -96,6 +96,8 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
                     return "You Lost"
                 case .tied:
                     return "You Tied"
+                case .quit:
+                    return "You Quit"
                 case .none:
                     if GKLocalPlayer.local == currentMatch?.currentParticipant?.player  {
                         return "Your Turn"
@@ -150,6 +152,8 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
                     return "They Lost"
                 case .tied:
                     return "They Tied"
+                case .quit:
+                    return "They Quit"
                 case .none:
                     if GKLocalPlayer.local != currentMatch?.currentParticipant?.player  {
                         return "Their Turn"
