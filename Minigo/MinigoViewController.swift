@@ -330,8 +330,9 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         match.endTurn(
             withNextParticipants: match.nonCurrentParticipants,
             turnTimeout: GKTurnTimeoutDefault,
-            match: minigoMatchData ?? Data(),
-            completionHandler: nil)
+            match: minigoMatchData ?? Data()) { (err) -> Void in
+                self.updateViewFromModel()
+        }
     }
     
 
