@@ -689,8 +689,10 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
                 }
                 match.currentParticipant?.matchOutcome = .won
                 
-                match.endMatchInTurn(withMatch: match.matchData ?? Data())
-                updateViewFromModel()
+                match.endMatchInTurn(withMatch: match.matchData ?? Data()) { (err) -> Void in
+                    self.updateViewFromModel()
+                }
+                
             }
             
         }
