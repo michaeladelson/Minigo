@@ -363,6 +363,8 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     private func pass() {
         if localPlayerCanMakeTurn {
+            let currentPlayer = minigoGame.currentPlayer
+            let noncurrentPlayer = minigoGame.noncurrentPlayer
             minigoGame.pass()
             setBoardToCurrentPosition()
             
@@ -370,11 +372,11 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
                 endTurn()
             } else {
                 if let match = currentMatch {
-                    let currentPlayerScore = minigoGame.scoreOf(player: minigoGame.currentPlayer)
-                    let nonCurrentPlayerScore = minigoGame.scoreOf(player: minigoGame.noncurrentPlayer)
+                    let currentPlayerScore = minigoGame.scoreOf(player: currentPlayer)
+                    let nonCurrentPlayerScore = minigoGame.scoreOf(player: noncurrentPlayer)
                     if currentPlayerScore > nonCurrentPlayerScore {
                         for participant in match.participants {
-                            if participant.player == match.currentParticipant {
+                            if participant == match.currentParticipant {
                                 participant.matchOutcome = .won
                             } else {
                                 participant.matchOutcome = .lost
@@ -382,7 +384,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
                         }
                     } else if currentPlayerScore < nonCurrentPlayerScore {
                         for participant in match.participants {
-                            if participant.player == match.currentParticipant {
+                            if participant == match.currentParticipant {
                                 participant.matchOutcome = .lost
                             } else {
                                 participant.matchOutcome = .won
