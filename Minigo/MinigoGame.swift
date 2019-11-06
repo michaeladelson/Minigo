@@ -86,9 +86,23 @@ struct MinigoGame
         boardHistory.append(board)
     }
     
-    //need to write
+    
     func scoreOf(player: Player) -> Int {
-        return 0
+        var score = 0
+        
+        if player != .none {
+            let otherPlayer = (player == Player.black ? Player.white : Player.black)
+            
+            let colorPoints = pointsWithColor(player)
+            let emptyPointsThatReachColor = pointsThatReach(withColor: .none, toColor: player)
+            let emptyPointsThatReachOtherColor = pointsThatReach(withColor: .none, toColor: otherPlayer)
+            
+            let pointsThatContributeToScore = colorPoints + emptyPointsThatReachColor.filter( { !emptyPointsThatReachOtherColor.contains($0) } )
+            
+            score = pointsThatContributeToScore.count
+        }
+        
+        return score
     }
     
     mutating func placeStoneAt(x: Int, y:Int) -> Bool {
@@ -115,6 +129,30 @@ struct MinigoGame
     private var whitePointsWithoutLiberties: [Point] {
         return pointsWithoutLiberties(withColor: .white)
     }
+    
+    private var blackPoints: [Point] {
+        return pointsWithColor(.black)
+    }
+    
+    private var whitePoints: [Point] {
+        return pointsWithColor(.white)
+    }
+    
+    private func pointsWithColor(_ color: Player) -> [Point] {
+        var colorPoints = [Point]()
+        
+        for i in 0..<boardSize {
+            for j in 0..<boardSize {
+                if board[i][j] == color {
+                    let point = Point(x: i, y: j)
+                    colorPoints.append(point)
+                }
+            }
+        }
+        
+        return colorPoints
+    }
+    
     
     struct Point: Equatable, Codable, CustomStringConvertible
     {
@@ -166,68 +204,135 @@ struct MinigoGame
     }
     
     private func pointsWithoutLiberties(withColor color: Player) -> [Point] {
-        var colorPointsWithoutLiberties = [Point]()
+        return pointsThatDoNotReach(withColor: color, toColor: .none)
+    }
+    
+    private func pointsThatDoNotReach(withColor color: Player, toColor reachedColor: Player) -> [Point] {
+        var pointsThatDoNoReach = [Point]()
+        var pointsReaching = [Point]()
         
-        if color != .none {
-            var colorLiberties = [Point]()
-            
-            for i in 0..<boardSize {
-                for j in 0..<boardSize {
-                    let point = Point(x: i, y: j)
-                    
-                    if board[i][j] == .none {
-                        colorLiberties.append(point)
-                    } else if board[i][j] == color {
-                        colorPointsWithoutLiberties.append(point)
-                    }
+        for i in 0..<boardSize {
+            for j in 0..<boardSize {
+                let point = Point(x: i, y: j)
+
+                if board[i][j] == color {
+                    pointsThatDoNoReach.append(point)
+                } else if board[i][j] == reachedColor {
+                    pointsReaching.append(point)
                 }
-            }
-            
-            while !colorLiberties.isEmpty {
-                var newColorLiberties = [Point]()
-                for liberty in colorLiberties {
-                    let i = liberty.x
-                    let j = liberty.y
-                    
-                    if i-1 >= 0 {
-                        let point = Point(x: i-1, y: j)
-                        if let index = colorPointsWithoutLiberties.firstIndex(of: point) {
-                            colorPointsWithoutLiberties.remove(at: index)
-                            newColorLiberties.append(point)
-                        }
-                    }
-                    
-                    if i+1 < boardSize {
-                        let point = Point(x: i+1, y: j)
-                        if let index = colorPointsWithoutLiberties.firstIndex(of: point) {
-                            colorPointsWithoutLiberties.remove(at: index)
-                            newColorLiberties.append(point)
-                        }
-                    }
-                    
-                    if j-1 >= 0 {
-                        let point = Point(x: i, y: j-1)
-                        if let index = colorPointsWithoutLiberties.firstIndex(of: point) {
-                            colorPointsWithoutLiberties.remove(at: index)
-                            newColorLiberties.append(point)
-                        }
-                    }
-                    
-                    if j+1 < boardSize {
-                        let point = Point(x: i, y: j+1)
-                        if let index = colorPointsWithoutLiberties.firstIndex(of: point) {
-                            colorPointsWithoutLiberties.remove(at: index)
-                            newColorLiberties.append(point)
-                        }
-                    }
-                    
-                }
-                
-                colorLiberties = newColorLiberties
             }
         }
         
-        return colorPointsWithoutLiberties
+        while !pointsReaching.isEmpty {
+            var newPointsReaching = [Point]()
+            
+            for point in pointsReaching {
+                let i = point.x
+                let j = point.y
+                
+                if i-1 >= 0 {
+                    let newPoint = Point(x: i-1, y: j)
+                    if let index = pointsThatDoNoReach.firstIndex(of: newPoint) {
+                        pointsThatDoNoReach.remove(at: index)
+                        newPointsReaching.append(newPoint)
+                    }
+                }
+                
+                if i+1 < boardSize {
+                    let newPoint = Point(x: i+1, y: j)
+                    if let index = pointsThatDoNoReach.firstIndex(of: newPoint) {
+                        pointsThatDoNoReach.remove(at: index)
+                        newPointsReaching.append(newPoint)
+                    }
+                }
+                
+                if j-1 >= 0 {
+                    let newPoint = Point(x: i, y: j-1)
+                    if let index = pointsThatDoNoReach.firstIndex(of: newPoint) {
+                        pointsThatDoNoReach.remove(at: index)
+                        newPointsReaching.append(newPoint)
+                    }
+                }
+                
+                if j+1 < boardSize {
+                    let newPoint = Point(x: i, y: j+1)
+                    if let index = pointsThatDoNoReach.firstIndex(of: newPoint) {
+                        pointsThatDoNoReach.remove(at: index)
+                        newPointsReaching.append(newPoint)
+                    }
+                }
+            }
+            
+            pointsReaching = newPointsReaching
+        }
+        
+        return pointsThatDoNoReach
     }
+    
+    private func pointsThatReach(withColor color: Player, toColor reachedColor: Player) -> [Point] {
+        var pointsThatReach = [Point]()
+        var pointsThatDoNoReach = [Point]()
+        var pointsReaching = [Point]()
+        
+        for i in 0..<boardSize {
+            for j in 0..<boardSize {
+                let point = Point(x: i, y: j)
+
+                if board[i][j] == color {
+                    pointsThatDoNoReach.append(point)
+                } else if board[i][j] == reachedColor {
+                    pointsReaching.append(point)
+                }
+            }
+        }
+        
+        while !pointsReaching.isEmpty {
+            var newPointsReaching = [Point]()
+            
+            for point in pointsReaching {
+                let i = point.x
+                let j = point.y
+                
+                if i-1 >= 0 {
+                    let newPoint = Point(x: i-1, y: j)
+                    if let index = pointsThatDoNoReach.firstIndex(of: newPoint) {
+                        pointsThatDoNoReach.remove(at: index)
+                        newPointsReaching.append(newPoint)
+                    }
+                }
+                
+                if i+1 < boardSize {
+                    let newPoint = Point(x: i+1, y: j)
+                    if let index = pointsThatDoNoReach.firstIndex(of: newPoint) {
+                        pointsThatDoNoReach.remove(at: index)
+                        newPointsReaching.append(newPoint)
+                    }
+                }
+                
+                if j-1 >= 0 {
+                    let newPoint = Point(x: i, y: j-1)
+                    if let index = pointsThatDoNoReach.firstIndex(of: newPoint) {
+                        pointsThatDoNoReach.remove(at: index)
+                        newPointsReaching.append(newPoint)
+                    }
+                }
+                
+                if j+1 < boardSize {
+                    let newPoint = Point(x: i, y: j+1)
+                    if let index = pointsThatDoNoReach.firstIndex(of: newPoint) {
+                        pointsThatDoNoReach.remove(at: index)
+                        newPointsReaching.append(newPoint)
+                    }
+                }
+            }
+            
+            pointsReaching = newPointsReaching
+            pointsThatReach += newPointsReaching
+        }
+        
+        return pointsThatReach
+    }
+    
 }
+
 
