@@ -182,7 +182,15 @@ struct MinigoGame
                     
                     let currentPlayerPointsWithoutLiberties = pointsWithoutLiberties(withColor: currentPlayer)
                     
-                    if currentPlayerPointsWithoutLiberties.isEmpty && !boardHistory.contains(board) {
+                    var noncurrentPlayerTurnHistory = [[[Player]]]()
+                    
+                    for index in boardHistory.indices {
+                        if (index % 2) == (noncurrentPlayer == Player.black ? 0 : 1) {
+                            noncurrentPlayerTurnHistory.append(boardHistory[index])
+                        }
+                    }
+                    
+                    if currentPlayerPointsWithoutLiberties.isEmpty && !noncurrentPlayerTurnHistory.contains(board) {
                         boardHistory.append(board)
                         _moveHistory.append(point)
                         currentPlayer = noncurrentPlayer
