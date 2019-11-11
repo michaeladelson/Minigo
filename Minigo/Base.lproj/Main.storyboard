@@ -210,7 +210,7 @@
                         <outlet property="nonLocalPlayerNameLabel" destination="WR9-1Y-ZxY" id="ims-aW-qEa"/>
                         <outlet property="nonLocalPlayerStackView" destination="LPA-Fr-0ni" id="Ejl-xd-Jox"/>
                         <outlet property="nonLocalPlayerStatusLabel" destination="XJH-oN-15i" id="dbd-PI-T8H"/>
-                        <outlet property="passButton" destination="Mng-ET-xBx" id="et7-KK-u4a"/>
+                        <outlet property="passButton" destination="Mng-ET-xBx" id="F48-aP-8me"/>
                         <outlet property="rewindButton" destination="mJS-6c-KGA" id="5NZ-1B-9FN"/>
                     </connections>
                 </viewController>
