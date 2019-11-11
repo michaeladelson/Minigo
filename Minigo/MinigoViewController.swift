@@ -520,7 +520,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
-    // MARK: Application Lifecycle methods
+    // MARK: ViewController Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
