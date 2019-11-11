@@ -533,9 +533,9 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         print("nil == nil: \(nil == nil)")
         
         rewindButton.isEnabled = false
-        rewindButton.alpha = 0.2
+//        rewindButton.alpha = 0.2
         fastForwardButton.isEnabled = false
-        fastForwardButton.alpha = 0.2
+//        fastForwardButton.alpha = 0.2
         
 //        let horizontalSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(pass(byHandlingGestureRecognizedBy:)))
 //        horizontalSwipeGestureRecognizer.direction = [.left,.right]
