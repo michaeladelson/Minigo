@@ -235,6 +235,8 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     @IBOutlet weak var rewindButton: MinigoButton! {
         didSet {
             rewindButton.layer.cornerRadius = 6.0
+            rewindButton.adjustsImageWhenHighlighted = false
+            rewindButton.isEnabled = false
         }
     }
     
@@ -242,12 +244,14 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         didSet {
             fastForwardButton.layer.cornerRadius = 6.0
             fastForwardButton.adjustsImageWhenHighlighted = false
+            fastForwardButton.isEnabled = false
         }
     }
     
     @IBOutlet weak var passButton: MinigoButton! {
         didSet {
             passButton.layer.cornerRadius = 8.0
+            passButton.isEnabled = false
         }
     }
     
@@ -532,11 +536,11 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         print("blackPlayerID == whitePlayerID: \(blackPlayerID == whitePlayerID)")
         print("nil == nil: \(nil == nil)")
         
-        rewindButton.isEnabled = false
-//        rewindButton.alpha = 0.2
-        fastForwardButton.isEnabled = false
+//        rewindButton.isEnabled = false
+//       rewindButton.alpha = 0.2
+//        fastForwardButton.isEnabled = false
 //        fastForwardButton.alpha = 0.2
-        passButton.isEnabled = false
+//        passButton.isEnabled = false
         
 //        let horizontalSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(pass(byHandlingGestureRecognizedBy:)))
 //        horizontalSwipeGestureRecognizer.direction = [.left,.right]
