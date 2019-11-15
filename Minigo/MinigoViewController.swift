@@ -456,6 +456,12 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             fastForwardButton.isEnabled = true
         }
         
+        if turnNumberToDisplay == minigoGame.turnCount && localPlayerCanMakeTurn {
+            passButton.isEnabled = true
+        } else {
+            passButton.isEnabled = false
+        }
+        
     }
     
     private func pointColor(for player: MinigoGame.Player) -> BoardViewPoint.PointColor {
