@@ -8,17 +8,17 @@
 
 import UIKit
 
-protocol BoardViewDelegate
+protocol BoardViewDelegate: class
 {
-    func didSelectPointAt(row: Int, column: Int)
-    func getColorForPointAt(row: Int, column: Int) -> BoardViewPoint.PointColor
+    func didSelectPointAt(_ boardView: BoardView, row: Int, column: Int)
+    func getColorForPointAt(_ boardView: BoardView, row: Int, column: Int) -> BoardViewPoint.PointColor
 }
 
 class BoardView: UIView {
     
     private(set) var boardSize = 9
     
-    var delegate: BoardViewDelegate?
+    weak var delegate: BoardViewDelegate?
     
     init?(boardSize: Int, frame: CGRect) {
         if boardSize > 0 {
@@ -72,7 +72,7 @@ class BoardView: UIView {
             if let viewOfRecognizer = recognizer.view {
                 if let point = viewOfRecognizer as? BoardViewPoint {
                     if let (row, column) = getRowAndColumnOf(point: point) {
-                        delegate?.didSelectPointAt(row: row, column: column)
+                        delegate?.didSelectPointAt(self, row: row, column: column)
                         updateColorForAllPoints()
                     }
                 }
@@ -110,7 +110,7 @@ class BoardView: UIView {
     func updateColorForAllPoints() {
         for row in 0..<points.count {
             for column in 0..<points[row].count {
-                if let color = delegate?.getColorForPointAt(row: row, column: column) {
+                if let color = delegate?.getColorForPointAt(self, row: row, column: column) {
                     points[row][column].color = color
                 }
             }

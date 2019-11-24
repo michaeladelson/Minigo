@@ -22,6 +22,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     var boardView: BoardView!
     
     var authenticationChangedObserver: NSObjectProtocol?
+    var willEnterForegroundObserver: NSObjectProtocol?
     
     var currentMatch: GKTurnBasedMatch?
     
@@ -309,21 +310,26 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
 
     
     private func presentGKTurnBasedMatchmakerViewController() {
-        print("presentGKTurnBasedMatchmakerViewController")
-        let request = GKMatchRequest()
-        request.minPlayers = 2
-        request.maxPlayers = 2
-        request.inviteMessage = "Would you like to play Minígo?"
-        let matchmakerViewController = GKTurnBasedMatchmakerViewController(matchRequest: request)
-        matchmakerViewController.turnBasedMatchmakerDelegate = self
-        currentMatchmakerViewController = matchmakerViewController
-        self.present(matchmakerViewController, animated: true, completion: nil)
+        if GKLocalPlayer.local.isAuthenticated {
+            let request = GKMatchRequest()
+            request.minPlayers = 2
+            request.maxPlayers = 2
+            request.inviteMessage = "Would you like to play Minígo?"
+            let matchmakerViewController = GKTurnBasedMatchmakerViewController(matchRequest: request)
+            matchmakerViewController.turnBasedMatchmakerDelegate = self
+            currentMatchmakerViewController = matchmakerViewController
+            self.present(matchmakerViewController, animated: true, completion: nil)
+        } else {
+            print("!GKLocalPlayer.local.isAuthenticated")
+            let alert = UIAlertController(title: "Multiplayer Unavailable",
+                                          message: "Player is not signed in",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK",
+                                          style: .default,
+                                          handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
     }
-    
-
-    
-
-    
 
     
     private func endTurn() {
@@ -563,6 +569,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print("test0")
         super.viewWillAppear(animated)
         authenticationChangedObserver = NotificationCenter.default.addObserver(
             forName: .GKPlayerAuthenticationDidChangeNotificationName,
@@ -575,7 +582,35 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
                 } else {
                     GKLocalPlayer.local.unregisterAllListeners()
                 }
-            }
+        }
+        
+        willEnterForegroundObserver = NotificationCenter.default.addObserver(
+            forName: UIApplication.willEnterForegroundNotification,
+            object: UIApplication.shared,
+            queue: OperationQueue.main) { notification in
+                // set the current match to nil if the local player is not a participant in the current match
+                print("willEnterForegroundNotification test")
+                if let match = self.currentMatch {
+                    print("test2")
+                    var players = [GKPlayer]()
+
+                    for participant in match.participants {
+                        if let player = participant.player {
+                            players.append(player)
+                            print("testtesttest")
+                        }
+                    }
+
+                    if !players.contains(GKLocalPlayer.local) {
+                        print("contains(GKLocalPlayer.local)")
+                        self.currentMatch = nil
+                        self.minigoGame = MinigoGame(boardSize: 9)
+                        self.turnNumberToDisplay = 0
+                        self.updateViewFromModel()
+                    }
+                }
+        }
+        
         updateViewFromModel()
     }
     
@@ -584,6 +619,11 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         if let observer = authenticationChangedObserver {
             NotificationCenter.default.removeObserver(observer)
             authenticationChangedObserver = nil
+        }
+        
+        if let observer = willEnterForegroundObserver {
+            NotificationCenter.default.removeObserver(observer)
+            willEnterForegroundObserver = nil
         }
     }
     
@@ -632,7 +672,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     // MARK: BoardViewDelegate methods
     
-    func getColorForPointAt(row: Int, column: Int) -> BoardViewPoint.PointColor {
+    func getColorForPointAt(_ boardView: BoardView, row: Int, column: Int) -> BoardViewPoint.PointColor {
         let pieceColor = minigoGame.boardHistory[turnNumberToDisplay][row][column]
         
         switch pieceColor {
@@ -645,7 +685,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
-    func didSelectPointAt(row: Int, column: Int) {
+    func didSelectPointAt(_ boardView: BoardView, row: Int, column: Int) {
         if localPlayerCanMakeTurn && boardIsInCurrentPosition {
             let moveWasSuccessful = minigoGame.placeStoneAt(x: row, y: column)
             if moveWasSuccessful {
