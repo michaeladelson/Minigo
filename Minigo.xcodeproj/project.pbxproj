@@ -23,7 +23,7 @@
 
 /* Begin PBXFileReference section */
 		4C1C086523557200004A2968 /* BoardViewPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewPoint.swift; sourceTree = "<group>"; };
-		4C8BF2702324761600B4A72D /* Minigo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Minigo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C8BF2702324761600B4A72D /* Minígo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Minígo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C8BF2732324761600B4A72D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C8BF2752324761600B4A72D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		4C8BF2772324761600B4A72D /* MinigoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinigoViewController.swift; sourceTree = "<group>"; };
@@ -63,7 +63,7 @@
 		4C8BF2712324761600B4A72D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4C8BF2702324761600B4A72D /* Minigo.app */,
+				4C8BF2702324761600B4A72D /* Minígo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -121,7 +121,7 @@
 			);
 			name = Minigo;
 			productName = Minigo;
-			productReference = 4C8BF2702324761600B4A72D /* Minigo.app */;
+			productReference = 4C8BF2702324761600B4A72D /* Minígo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -337,7 +337,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelladelson.minigo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Minígo";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -358,7 +358,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelladelson.minigo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Minígo";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
