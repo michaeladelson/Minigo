@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Fvt-eo-U0I">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Fvt-eo-U0I">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,7 +11,7 @@
         <!--Minigo View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="MinigoViewController" customModule="Minigo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MinigoViewController" customModule="Minígo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -30,7 +30,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="dLU-g1-Gi9">
                                         <rect key="frame" x="97.333333333333329" y="19.999999999999993" width="180.33333333333337" height="117.33333333333331"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mng-ET-xBx" customClass="MinigoButton" customModule="Minigo" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mng-ET-xBx" customClass="MinigoButton" customModule="Minígo" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="180.33333333333334" height="54.666666666666664"/>
                                                 <color key="backgroundColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
@@ -44,7 +44,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NXw-Qe-LUx">
                                                 <rect key="frame" x="0.0" y="62.666666666666742" width="180.33333333333334" height="54.666666666666657"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mJS-6c-KGA" customClass="MinigoButton" customModule="Minigo" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mJS-6c-KGA" customClass="MinigoButton" customModule="Minígo" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="54.666666666666664" height="54.666666666666664"/>
                                                         <color key="backgroundColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="40"/>
@@ -64,7 +64,7 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N4L-x6-ccW" customClass="MinigoButton" customModule="Minigo" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N4L-x6-ccW" customClass="MinigoButton" customModule="Minígo" customModuleProvider="target">
                                                         <rect key="frame" x="125.66666666666667" y="0.0" width="54.666666666666671" height="54.666666666666664"/>
                                                         <color key="backgroundColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="40"/>
@@ -96,7 +96,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y67-3c-rgO">
                                 <rect key="frame" x="0.0" y="87.999999999999986" width="375" height="157.66666666666663"/>
                                 <subviews>
-                                    <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="R8I-Zj-lZn" customClass="BoardViewPoint" customModule="Minigo" customModuleProvider="target">
+                                    <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="R8I-Zj-lZn" customClass="BoardViewPoint" customModule="Minígo" customModuleProvider="target">
                                         <rect key="frame" x="314" y="52.333333333333343" width="53" height="53"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
@@ -104,7 +104,7 @@
                                             <constraint firstAttribute="width" secondItem="R8I-Zj-lZn" secondAttribute="height" multiplier="1:1" id="vra-kL-hnd"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="UDq-l6-yhc" customClass="BoardViewPoint" customModule="Minigo" customModuleProvider="target">
+                                    <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="UDq-l6-yhc" customClass="BoardViewPoint" customModule="Minígo" customModuleProvider="target">
                                         <rect key="frame" x="8" y="52.333333333333343" width="53" height="53"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
@@ -124,7 +124,7 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Local player status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ls5-mG-oIn">
                                                 <rect key="frame" x="0.0" y="26.333333333333314" width="106.33333333333333" height="26.666666666666671"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -141,7 +141,7 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nonlocal player status" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="XJH-oN-15i">
                                                 <rect key="frame" x="0.0" y="26.333333333333314" width="114.33333333333333" height="26.666666666666671"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -163,11 +163,19 @@
                                     <constraint firstItem="rbw-1b-Tal" firstAttribute="height" secondItem="UDq-l6-yhc" secondAttribute="height" id="ybZ-fT-JVU"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="wwT-dx-b9S">
+                                <rect key="frame" x="169" y="414.66666666666669" width="37" height="37"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="wwT-dx-b9S" firstAttribute="centerY" secondItem="74Q-Ha-bS0" secondAttribute="centerY" id="33V-TM-57w"/>
                             <constraint firstItem="74Q-Ha-bS0" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="top" id="3fp-qE-uSA"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Fys-MQ-nz7" secondAttribute="bottom" id="5lf-Qw-jGf"/>
+                            <constraint firstItem="wwT-dx-b9S" firstAttribute="centerX" secondItem="74Q-Ha-bS0" secondAttribute="centerX" id="6iq-2Q-y8i"/>
                             <constraint firstItem="74Q-Ha-bS0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Jla-uP-JVA"/>
                             <constraint firstItem="Fys-MQ-nz7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="LeK-Md-az3"/>
                             <constraint firstItem="74Q-Ha-bS0" firstAttribute="top" secondItem="y67-3c-rgO" secondAttribute="bottom" id="Mgy-Wh-KPk"/>
@@ -196,6 +204,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="wwT-dx-b9S" id="rts-RB-wE3"/>
                         <outlet property="boardViewContainer" destination="74Q-Ha-bS0" id="XTq-8d-Tp5"/>
                         <outlet property="buttonStackView" destination="dLU-g1-Gi9" id="x19-Ri-Oov"/>
                         <outlet property="clockEmojiLabel" destination="TUn-Qg-EGk" id="PEa-dF-YWv"/>
@@ -205,12 +214,14 @@
                         <outlet property="localPlayerNameLabel" destination="9Lq-51-KI1" id="Nqi-Vc-Ydo"/>
                         <outlet property="localPlayerStackView" destination="rbw-1b-Tal" id="osR-UJ-woj"/>
                         <outlet property="localPlayerStatusLabel" destination="ls5-mG-oIn" id="eBi-J2-UJf"/>
+                        <outlet property="menuBarButtonItem" destination="PW7-De-F1B" id="LO4-F3-4Yt"/>
                         <outlet property="nonLocalPlayerColorView" destination="R8I-Zj-lZn" id="M2A-qK-9ZV"/>
                         <outlet property="nonLocalPlayerColorViewWidthConstraint" destination="Aa9-iC-8ka" id="2n6-Yw-gbT"/>
                         <outlet property="nonLocalPlayerNameLabel" destination="WR9-1Y-ZxY" id="ims-aW-qEa"/>
                         <outlet property="nonLocalPlayerStackView" destination="LPA-Fr-0ni" id="Ejl-xd-Jox"/>
                         <outlet property="nonLocalPlayerStatusLabel" destination="XJH-oN-15i" id="dbd-PI-T8H"/>
                         <outlet property="passButton" destination="Mng-ET-xBx" id="F48-aP-8me"/>
+                        <outlet property="resignBarButtonItem" destination="tgr-X0-ljp" id="9tL-6N-Jct"/>
                         <outlet property="rewindButton" destination="mJS-6c-KGA" id="5NZ-1B-9FN"/>
                     </connections>
                 </viewController>

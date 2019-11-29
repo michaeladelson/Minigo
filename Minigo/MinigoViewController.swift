@@ -280,8 +280,13 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     @IBOutlet weak var clockEmojiLabel: UILabel!
     
-    
     @IBOutlet weak var buttonStackView: UIStackView!
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    @IBOutlet weak var menuBarButtonItem: UIBarButtonItem!
+    
+    @IBOutlet weak var resignBarButtonItem: UIBarButtonItem!
     
     
     @IBAction func rewind() {
@@ -468,6 +473,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             passButton.isEnabled = false
         }
         
+        resignBarButtonItem.isEnabled = (currentMatch != nil && currentMatch?.status != .ended)
     }
     
     private func pointColor(for player: MinigoGame.Player) -> BoardViewPoint.PointColor {
@@ -509,6 +515,9 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             } else {
                 print("c")
             }
+            
+            self.menuBarButtonItem.isEnabled = true
+            self.activityIndicator.stopAnimating()
         }
     }
     
@@ -527,8 +536,10 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
                             self.updateViewFromModel()
                         }
                     } else {
-                        match.participantQuitOutOfTurn(with: .quit) { (err) -> Void in
-                            self.updateViewFromModel()
+                        if localParticipant.matchOutcome == .none {
+                            match.participantQuitOutOfTurn(with: .quit) { (err) -> Void in
+                                self.updateViewFromModel()
+                            }
                         }
                     }
                 }
@@ -540,6 +551,13 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        menuBarButtonItem.isEnabled = GKLocalPlayer.local.isAuthenticated
+        resignBarButtonItem.isEnabled = (currentMatch != nil && currentMatch?.status != .ended)
+        
+        if GKLocalPlayer.local.isAuthenticated {
+            self.activityIndicator.stopAnimating()
+        }
         
         setAuthenticationHandler()
         
@@ -578,6 +596,8 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
                 if GKLocalPlayer.local.isAuthenticated {
                     GKLocalPlayer.local.register(self)
                     self.setPlayerIDs()
+                    self.menuBarButtonItem.isEnabled = true
+                    self.activityIndicator.stopAnimating()
 //                    self.presentGKTurnBasedMatchmakerViewController()
                 } else {
                     GKLocalPlayer.local.unregisterAllListeners()
