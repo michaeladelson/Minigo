@@ -513,7 +513,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             } else if GKLocalPlayer.local.isAuthenticated {
                 print("b")
             } else {
-                print("c")
+//                print("c")
             }
             
             self.menuBarButtonItem.isEnabled = true
