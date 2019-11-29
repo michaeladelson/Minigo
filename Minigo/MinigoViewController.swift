@@ -561,10 +561,10 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         
         setAuthenticationHandler()
         
-        print("localPlayerColor == nil: \(localPlayerColor == nil)")
-        print("currentMatch == nil: \(currentMatch == nil)")
-        print("blackPlayerID == whitePlayerID: \(blackPlayerID == whitePlayerID)")
-        print("nil == nil: \(nil == nil)")
+//        print("localPlayerColor == nil: \(localPlayerColor == nil)")
+//        print("currentMatch == nil: \(currentMatch == nil)")
+//        print("blackPlayerID == whitePlayerID: \(blackPlayerID == whitePlayerID)")
+//        print("nil == nil: \(nil == nil)")
         
 //        rewindButton.isEnabled = false
 //       rewindButton.alpha = 0.2
@@ -655,10 +655,10 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     override func viewDidLayoutSubviews() {
         //the following prints are for testing
-        print("localPlayerCanMakeTurn: \(localPlayerCanMakeTurn)") //just for testing
-        print("GKLocalPlayer.local.isAuthenticated: \(GKLocalPlayer.local.isAuthenticated)")  //just for testing
-        
-        print("localPlayerDisplayName: \(GKLocalPlayer.local.displayName)")
+//        print("localPlayerCanMakeTurn: \(localPlayerCanMakeTurn)") //just for testing
+//        print("GKLocalPlayer.local.isAuthenticated: \(GKLocalPlayer.local.isAuthenticated)")  //just for testing
+//
+//        print("localPlayerDisplayName: \(GKLocalPlayer.local.displayName)")
         
         if let match = currentMatch {
             print(match.status.rawValue)
@@ -733,7 +733,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     func player(_ player: GKPlayer, wantsToQuitMatch match: GKTurnBasedMatch) {
         // need to write
-        print("wantsToQuitMatch")
+//        print("wantsToQuitMatch")
         for participant in match.participants {
             if participant.player == player {
                 participant.matchOutcome = .lost
