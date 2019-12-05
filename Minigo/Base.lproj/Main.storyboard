@@ -97,32 +97,24 @@
                                 <rect key="frame" x="0.0" y="87.999999999999986" width="375" height="157.66666666666663"/>
                                 <subviews>
                                     <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="R8I-Zj-lZn" customClass="BoardViewPoint" customModule="Minígo" customModuleProvider="target">
-                                        <rect key="frame" x="314" y="52.333333333333343" width="53" height="53"/>
+                                        <rect key="frame" x="325.66666666666669" y="58" width="41.333333333333314" height="41.333333333333343"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="53" id="Aa9-iC-8ka"/>
-                                            <constraint firstAttribute="width" secondItem="R8I-Zj-lZn" secondAttribute="height" multiplier="1:1" id="vra-kL-hnd"/>
-                                        </constraints>
                                     </view>
                                     <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="UDq-l6-yhc" customClass="BoardViewPoint" customModule="Minígo" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="52.333333333333343" width="53" height="53"/>
+                                        <rect key="frame" x="8" y="58" width="41.333333333333336" height="41.333333333333343"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="53" id="5FE-bb-Kwa"/>
-                                            <constraint firstAttribute="width" secondItem="UDq-l6-yhc" secondAttribute="height" multiplier="1:1" id="cyq-Qf-2o4"/>
-                                        </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="rbw-1b-Tal">
-                                        <rect key="frame" x="69" y="52.333333333333343" width="114.66666666666669" height="53"/>
+                                        <rect key="frame" x="57.333333333333336" y="58" width="126.33333333333331" height="41.333333333333343"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Local player name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9Lq-51-KI1">
-                                                <rect key="frame" x="0.0" y="0.0" width="102.33333333333333" height="26.333333333333332"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="102.33333333333333" height="20.666666666666668"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Local player status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ls5-mG-oIn">
-                                                <rect key="frame" x="0.0" y="26.333333333333314" width="106.33333333333333" height="26.666666666666671"/>
+                                                <rect key="frame" x="0.0" y="20.666666666666657" width="106.33333333333333" height="20.666666666666671"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -130,16 +122,16 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="LPA-Fr-0ni">
-                                        <rect key="frame" x="191.66666666666666" y="52.333333333333343" width="114.33333333333334" height="53"/>
+                                        <rect key="frame" x="191.66666666666666" y="58" width="125.99999999999997" height="41.333333333333343"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nonlocal player name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="WR9-1Y-ZxY">
-                                                <rect key="frame" x="0.0" y="0.0" width="114.33333333333333" height="26.333333333333332"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="126" height="20.666666666666668"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nonlocal player status" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="XJH-oN-15i">
-                                                <rect key="frame" x="0.0" y="26.333333333333314" width="114.33333333333333" height="26.666666666666671"/>
+                                                <rect key="frame" x="0.0" y="20.666666666666657" width="126" height="20.666666666666671"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -152,6 +144,8 @@
                                     <constraint firstItem="LPA-Fr-0ni" firstAttribute="height" secondItem="R8I-Zj-lZn" secondAttribute="height" id="1Gc-sd-Up7"/>
                                     <constraint firstItem="UDq-l6-yhc" firstAttribute="centerY" secondItem="y67-3c-rgO" secondAttribute="centerY" id="2Nb-hW-x2L"/>
                                     <constraint firstItem="R8I-Zj-lZn" firstAttribute="leading" secondItem="LPA-Fr-0ni" secondAttribute="trailing" constant="8" symbolic="YES" id="GKG-Ht-wD9"/>
+                                    <constraint firstItem="UDq-l6-yhc" firstAttribute="width" secondItem="R8I-Zj-lZn" secondAttribute="width" id="HNC-na-f5I"/>
+                                    <constraint firstItem="UDq-l6-yhc" firstAttribute="height" secondItem="R8I-Zj-lZn" secondAttribute="height" id="IEe-e0-6J4"/>
                                     <constraint firstAttribute="trailing" secondItem="R8I-Zj-lZn" secondAttribute="trailing" constant="8" id="JRr-LA-OAU"/>
                                     <constraint firstItem="rbw-1b-Tal" firstAttribute="centerY" secondItem="UDq-l6-yhc" secondAttribute="centerY" id="MYJ-YK-KD6"/>
                                     <constraint firstItem="UDq-l6-yhc" firstAttribute="leading" secondItem="y67-3c-rgO" secondAttribute="leading" constant="8" id="NUU-9y-MWc"/>
@@ -172,6 +166,7 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="UDq-l6-yhc" firstAttribute="width" secondItem="74Q-Ha-bS0" secondAttribute="width" multiplier="0.11" id="1iM-43-jJF"/>
                             <constraint firstItem="wwT-dx-b9S" firstAttribute="centerY" secondItem="74Q-Ha-bS0" secondAttribute="centerY" id="33V-TM-57w"/>
                             <constraint firstItem="74Q-Ha-bS0" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="top" id="3fp-qE-uSA"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Fys-MQ-nz7" secondAttribute="bottom" id="5lf-Qw-jGf"/>
@@ -184,6 +179,7 @@
                             <constraint firstItem="74Q-Ha-bS0" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="Qk0-L3-nJg"/>
                             <constraint firstItem="y67-3c-rgO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="bgm-dm-wJX"/>
                             <constraint firstItem="74Q-Ha-bS0" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="bkg-gL-ssY"/>
+                            <constraint firstItem="UDq-l6-yhc" firstAttribute="height" secondItem="74Q-Ha-bS0" secondAttribute="height" multiplier="0.11" id="eCE-Jz-aJ4"/>
                             <constraint firstItem="74Q-Ha-bS0" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="oT7-Dv-pxD"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Fys-MQ-nz7" secondAttribute="trailing" id="qll-av-Ymx"/>
                             <constraint firstItem="Fys-MQ-nz7" firstAttribute="top" secondItem="74Q-Ha-bS0" secondAttribute="bottom" id="w2j-op-G7J"/>
@@ -210,13 +206,11 @@
                         <outlet property="clockEmojiLabel" destination="TUn-Qg-EGk" id="PEa-dF-YWv"/>
                         <outlet property="fastForwardButton" destination="N4L-x6-ccW" id="Fjs-bd-iTm"/>
                         <outlet property="localPlayerColorView" destination="UDq-l6-yhc" id="npe-89-liY"/>
-                        <outlet property="localPlayerColorViewWidthConstraint" destination="5FE-bb-Kwa" id="Xhv-G1-vWb"/>
                         <outlet property="localPlayerNameLabel" destination="9Lq-51-KI1" id="Nqi-Vc-Ydo"/>
                         <outlet property="localPlayerStackView" destination="rbw-1b-Tal" id="osR-UJ-woj"/>
                         <outlet property="localPlayerStatusLabel" destination="ls5-mG-oIn" id="eBi-J2-UJf"/>
                         <outlet property="menuBarButtonItem" destination="PW7-De-F1B" id="LO4-F3-4Yt"/>
                         <outlet property="nonLocalPlayerColorView" destination="R8I-Zj-lZn" id="M2A-qK-9ZV"/>
-                        <outlet property="nonLocalPlayerColorViewWidthConstraint" destination="Aa9-iC-8ka" id="2n6-Yw-gbT"/>
                         <outlet property="nonLocalPlayerNameLabel" destination="WR9-1Y-ZxY" id="ims-aW-qEa"/>
                         <outlet property="nonLocalPlayerStackView" destination="LPA-Fr-0ni" id="Ejl-xd-Jox"/>
                         <outlet property="nonLocalPlayerStatusLabel" destination="XJH-oN-15i" id="dbd-PI-T8H"/>

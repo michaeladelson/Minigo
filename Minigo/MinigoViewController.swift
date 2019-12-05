@@ -269,11 +269,6 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     @IBOutlet weak var nonLocalPlayerColorView: BoardViewPoint!
     
-    
-    @IBOutlet weak var localPlayerColorViewWidthConstraint: NSLayoutConstraint!
-    
-    @IBOutlet weak var nonLocalPlayerColorViewWidthConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var localPlayerStackView: UIStackView!
     
     @IBOutlet weak var nonLocalPlayerStackView: UIStackView!
@@ -672,11 +667,8 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         super.viewDidLayoutSubviews()
         boardView.frame = boardViewContainer.bounds
         
-        localPlayerColorViewWidthConstraint.constant = boardView.pointSize.width
-        nonLocalPlayerColorViewWidthConstraint.constant = boardView.pointSize.width
-        
-        localPlayerStackView.layoutIfNeeded()
-        nonLocalPlayerStackView.layoutIfNeeded()
+//        localPlayerStackView.layoutIfNeeded()
+//        nonLocalPlayerStackView.layoutIfNeeded()
         
         localPlayerNameLabel.font = localPlayerNameLabel.font.withSize(0.66 * localPlayerNameLabel.frame.height)
         localPlayerStatusLabel.font = localPlayerStatusLabel.font.withSize(0.66 * localPlayerStatusLabel.frame.height)
@@ -684,7 +676,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         nonLocalPlayerNameLabel.font = nonLocalPlayerNameLabel.font.withSize(0.66 * nonLocalPlayerNameLabel.frame.height)
         nonLocalPlayerStatusLabel.font = nonLocalPlayerStatusLabel.font.withSize(0.66 * nonLocalPlayerStatusLabel.frame.height)
         
-        buttonStackView.layoutIfNeeded()
+//        buttonStackView.layoutIfNeeded()
         
         clockEmojiLabel.font = clockEmojiLabel.font.withSize(0.9 * clockEmojiLabel.frame.height)
         
