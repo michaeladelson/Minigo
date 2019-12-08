@@ -23,7 +23,7 @@ struct MinigoGame
     
     private(set) var passCount = 0
     
-    var boardHistory = [[[Player]]]()
+    private(set) var boardHistory = [[[Player]]]()
     
     var blackScore: Int {
         return scoreOf(player: .black)
