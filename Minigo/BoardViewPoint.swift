@@ -8,8 +8,14 @@
 
 import UIKit
 
+/*
+ * A view that shows a stone on a BoardView
+ */
 class BoardViewPoint: UIView
 {
+    /*
+     * The different colors a stone can have.
+     */
     enum PointColor
     {
         case black
@@ -29,11 +35,6 @@ class BoardViewPoint: UIView
         setUp()
     }
     
-    private func setUp() {
-        contentMode = .redraw
-        backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
-    }
-    
     override func draw(_ rect: CGRect) {
         switch color {
         case .black:
@@ -50,12 +51,21 @@ class BoardViewPoint: UIView
         let path = UIBezierPath()
         
         path.addArc(withCenter: CGPoint(x: self.bounds.width/2, y: self.bounds.height/2),
-                    radius: 0.95 * CGFloat.minimum(self.bounds.width/2, self.bounds.height/2),
+                    radius: Constants.radiusRatio * CGFloat.minimum(self.bounds.width/2, self.bounds.height/2),
                     startAngle: 0.0,
                     endAngle: 2 * CGFloat.pi,
                     clockwise: true)
         
         path.stroke()
         path.fill()
+    }
+    
+    private struct Constants {
+        static let radiusRatio: CGFloat = 0.95
+    }
+    
+    private func setUp() {
+        contentMode = .redraw
+        backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
     }
 }
