@@ -76,7 +76,7 @@ class BoardView: UIView {
         path.stroke()
     }
     
-    //Updates the color of every BoardViewPoint on the board.
+    // Updates the color of every BoardViewPoint on the board.
     func updateColorForAllPoints() {
         for row in 0..<points.count {
             for column in 0..<points[row].count {
