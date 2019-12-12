@@ -10,6 +10,8 @@ import UIKit
 
 
 extension CGPoint {
+    
+    // Adds delta to this value.
     func offset(by delta: CGPoint) -> CGPoint {
         return CGPoint(x: x + delta.x, y: y + delta.y)
     }
