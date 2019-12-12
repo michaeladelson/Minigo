@@ -9,11 +9,11 @@
 import Foundation
 
 /*
- * An object that represents a game of go
+ * An object that represents a game of go.
  */
 struct MinigoGame
 {
-    // The different values that a point on the game board can take
+    // The different values that a point on the game board can take.
     enum Player: Equatable
     {
         case black
@@ -21,7 +21,7 @@ struct MinigoGame
         case none
     }
     
-    // Represents a location on the game board
+    // Represents a location on the game board.
     struct Point: Equatable, Codable, CustomStringConvertible
     {
         let x: Int
@@ -102,7 +102,7 @@ struct MinigoGame
         boardHistory.append(board)
     }
     
-    // Returns the score for player
+    // Returns the score for player.
     func scoreOf(player: Player) -> Int {
         var score = 0
         
@@ -130,7 +130,7 @@ struct MinigoGame
         return placeStoneAt(point: point)
     }
     
-    // currentPlayer passes turn
+    // Passes turn for the currentPlayer.
     mutating func pass() {
         _ = placeStoneAt(point: nil)
     }
@@ -153,7 +153,7 @@ struct MinigoGame
     }
     
     
-    // Return all the Points with color
+    // Returns all the Points with color.
     private func pointsWithColor(_ color: Player) -> [Point] {
         var colorPoints = [Point]()
         
@@ -169,7 +169,7 @@ struct MinigoGame
         return colorPoints
     }
     
-    // Remove all of the stones from the board
+    // Removes all of the stones from the board.
     private mutating func resetBoard() {
         for row in 0..<boardSize {
             for column in 0..<boardSize {
@@ -237,7 +237,7 @@ struct MinigoGame
     
     /*
      * Returns an array containing Points such that for each point board[point.x, point.y] == color and
-     * point does not reach another Point p with board[p.x, p.y] == reachedColor
+     * point does not reach another Point p with board[p.x, p.y] == reachedColor.
      */
     private func pointsThatDoNotReach(withColor color: Player, toColor reachedColor: Player) -> [Point] {
         var pointsThatDoNoReach = [Point]()
@@ -303,7 +303,7 @@ struct MinigoGame
     
     /*
      * Returns an array containing Points such that for each point board[point.x, point.y] == color and
-     * point reaches another Point p with board[p.x, p.y] == reachedColor
+     * point reaches another Point p with board[p.x, p.y] == reachedColor.
      */
     private func pointsThatReach(withColor color: Player, toColor reachedColor: Player) -> [Point] {
         var pointsThatReach = [Point]()

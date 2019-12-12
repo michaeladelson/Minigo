@@ -9,7 +9,7 @@
 import UIKit
 
 /*
- * A view that shows a stone on a BoardView
+ * A view that shows a stone on a BoardView.
  */
 class BoardViewPoint: UIView
 {

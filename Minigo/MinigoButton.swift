@@ -8,16 +8,15 @@
 
 import UIKit
 
+/*
+ * A button used as part of the Minígo user interface.
+ */
 class MinigoButton: UIButton {
 
     override var isHighlighted: Bool {
         didSet {
             if isEnabled {
-                if isHighlighted {
-                    self.alpha = 0.2
-                } else {
-                    self.alpha = 1.0
-                }
+                self.alpha = isHighlighted ? Constants.alpha : 1.0
             }
         }
     }
@@ -25,9 +24,9 @@ class MinigoButton: UIButton {
     override var isEnabled: Bool {
         didSet {
             if isEnabled {
-                self.alpha = 1.0
+                self.alpha = isHighlighted ? Constants.alpha : 1.0
             } else {
-                self.alpha = 0.2
+                self.alpha = Constants.alpha
             }
         }
     }
@@ -36,9 +35,13 @@ class MinigoButton: UIButton {
         super.layoutSubviews()
         
         if titleLabel != nil {
-            titleLabel!.font = titleLabel!.font.withSize(0.66 * frame.height)
+            titleLabel!.font = titleLabel!.font.withSize(Constants.fontSizeToHeightRatio * frame.height)
         }
     }
     
-
+    private struct Constants {
+        static let alpha: CGFloat = 0.2
+        static let fontSizeToHeightRatio: CGFloat = 0.66
+    }
+    
 }

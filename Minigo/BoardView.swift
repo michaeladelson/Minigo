@@ -8,15 +8,21 @@
 
 import UIKit
 
+/*
+ * Methods that handle interactions with a boardView.
+ */
 protocol BoardViewDelegate: class
 {
     func didSelectPointAt(_ boardView: BoardView, row: Int, column: Int)
     func getColorForPointAt(_ boardView: BoardView, row: Int, column: Int) -> BoardViewPoint.PointColor
 }
 
+/*
+ * A view that presents a go gameboard.
+ */
 class BoardView: UIView {
     
-    private(set) var boardSize = 9
+    private(set) var boardSize = Constants.boardSize
     
     weak var delegate: BoardViewDelegate?
     
@@ -40,61 +46,6 @@ class BoardView: UIView {
         setUp()
     }
     
-    private var points = [[BoardViewPoint]]()
-    
-    var pointSize: CGSize {
-        return CGSize(width: 0.99 * lineSpacingWidthWise,
-                      height: 0.99 * lineSpacingHeightWise)
-    }
-    
-    func setUp() {
-        backgroundColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
-        contentMode = .redraw
-        
-        for _ in 0..<boardSize {
-            var row = [BoardViewPoint]()
-            
-            for _ in 0..<boardSize {
-                let point = BoardViewPoint(frame: CGRect.zero)
-                let pointTapGestureRecognizer = UITapGestureRecognizer(target: self,
-                                                                       action: #selector(selectPoint(byHandlingGestureRecognizedBy:)))
-                point.addGestureRecognizer(pointTapGestureRecognizer)
-                self.addSubview(point)
-                row.append(point)
-            }
-            points.append(row)
-        }
-    }
-    
-    @objc private func selectPoint(byHandlingGestureRecognizedBy recognizer: UITapGestureRecognizer) {
-        switch recognizer.state {
-        case .ended:
-            if let viewOfRecognizer = recognizer.view {
-                if let point = viewOfRecognizer as? BoardViewPoint {
-                    if let (row, column) = getRowAndColumnOf(point: point) {
-                        delegate?.didSelectPointAt(self, row: row, column: column)
-                        updateColorForAllPoints()
-                    }
-                }
-            }
-        default: break
-        }
-    }
-    
-    
-    private func getRowAndColumnOf(point: BoardViewPoint) -> (Int, Int)? {
-        for row in 0..<points.count {
-            for column in 0..<points[row].count {
-                if points[row][column] == point {
-                    return (row, column)
-                }
-            }
-        }
-        
-        return nil
-    }
-    
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         for i in 0..<points.count {
@@ -104,30 +55,6 @@ class BoardView: UIView {
                                                                          y: CGFloat(i) * lineSpacingHeightWise))
             }
         }
-    }
-    
-    
-    func updateColorForAllPoints() {
-        for row in 0..<points.count {
-            for column in 0..<points[row].count {
-                if let color = delegate?.getColorForPointAt(self, row: row, column: column) {
-                    points[row][column].color = color
-                }
-            }
-        }
-    }
-    
-
-    private var lineSpacingWidthWise: CGFloat {
-        return self.bounds.width / CGFloat(boardSize)
-    }
-    
-    private var lineSpacingHeightWise: CGFloat {
-        return self.bounds.height / CGFloat(boardSize)
-    }
-    
-    private var upperLeftCorner: CGPoint {
-        return CGPoint(x: lineSpacingWidthWise/2, y: lineSpacingHeightWise/2)
     }
     
     override func draw(_ rect: CGRect) {
@@ -148,6 +75,95 @@ class BoardView: UIView {
         UIColor.black.setStroke()
         path.stroke()
     }
-
+    
+    //Updates the color of every BoardViewPoint on the board.
+    func updateColorForAllPoints() {
+        for row in 0..<points.count {
+            for column in 0..<points[row].count {
+                if let color = delegate?.getColorForPointAt(self, row: row, column: column) {
+                    points[row][column].color = color
+                }
+            }
+        }
+    }
+    
+    private struct Constants {
+        static let boardSize = 9
+        static let pointWidthToLineSpacingWidthWiseRatio: CGFloat = 0.99
+        static let pointHeightToLineSpacingHeightWiseRatio: CGFloat = 0.99
+    }
+    
+    // The BoardViewPoints that appear on the board.
+    private var points = [[BoardViewPoint]]()
+    
+    private var pointSize: CGSize {
+        return CGSize(width: Constants.pointWidthToLineSpacingWidthWiseRatio * lineSpacingWidthWise,
+                      height: Constants.pointHeightToLineSpacingHeightWiseRatio * lineSpacingHeightWise)
+    }
+    
+    // Performs some set up work when called. The function is intended to be called when an instance of BoardView is instantiated.
+    private func setUp() {
+        backgroundColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
+        contentMode = .redraw
+        
+        for _ in 0..<boardSize {
+            var row = [BoardViewPoint]()
+            
+            for _ in 0..<boardSize {
+                let point = BoardViewPoint(frame: CGRect.zero)
+                let pointTapGestureRecognizer = UITapGestureRecognizer(target: self,
+                                                                       action: #selector(selectPoint(byHandlingGestureRecognizedBy:)))
+                point.addGestureRecognizer(pointTapGestureRecognizer)
+                self.addSubview(point)
+                row.append(point)
+            }
+            points.append(row)
+        }
+    }
+    
+    // A function called when a boardViewPoint is tapped which tells the boardViewDelegate that a point has been selected.
+    @objc private func selectPoint(byHandlingGestureRecognizedBy recognizer: UITapGestureRecognizer) {
+        switch recognizer.state {
+        case .ended:
+            if let viewOfRecognizer = recognizer.view {
+                if let point = viewOfRecognizer as? BoardViewPoint {
+                    if let (row, column) = getRowAndColumnOf(point: point) {
+                        delegate?.didSelectPointAt(self, row: row, column: column)
+                        updateColorForAllPoints()
+                    }
+                }
+            }
+        default: break
+        }
+    }
+    
+    // Returns the row and column of a boardViewPoint on the board.
+    private func getRowAndColumnOf(point: BoardViewPoint) -> (Int, Int)? {
+        for row in 0..<points.count {
+            for column in 0..<points[row].count {
+                if points[row][column] == point {
+                    return (row, column)
+                }
+            }
+        }
+        
+        return nil
+    }
+    
+    // The horizontal spacing between grid lines on the board.
+    private var lineSpacingWidthWise: CGFloat {
+        return self.bounds.width / CGFloat(boardSize)
+    }
+    
+    // The verticle spacing between grid lines on the board.
+    private var lineSpacingHeightWise: CGFloat {
+        return self.bounds.height / CGFloat(boardSize)
+    }
+    
+    // The point where the upper left corner of the board grid is to be drawn.
+    private var upperLeftCorner: CGPoint {
+        return CGPoint(x: lineSpacingWidthWise/2, y: lineSpacingHeightWise/2)
+    }
+    
 }
 
