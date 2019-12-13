@@ -61,6 +61,38 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         return whiteParticipant?.player
     }
     
+    var turnNumberToDisplay = 0 {
+        didSet {
+            updateViewFromModel()
+        }
+    }
+    
+    func resignLocalPlayer() {
+        if let match = currentMatch {
+            if match.status != .ended && match.status != .unknown {
+                if let localParticipant = match.localParticipant {
+                    if localParticipant == match.currentParticipant {
+                        localParticipant.matchOutcome = .lost
+                        
+                        for participant in match.nonLocalParticipants {
+                            participant.matchOutcome = .won
+                        }
+                        
+                        match.endMatchInTurn(withMatch: match.matchData ?? Data()) { (err) -> Void in
+                            self.updateViewFromModel()
+                        }
+                    } else {
+                        if localParticipant.matchOutcome == .none {
+                            match.participantQuitOutOfTurn(with: .quit) { (err) -> Void in
+                                self.updateViewFromModel()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     private var localPlayerName: String? {
         if let match = currentMatch {
             if let name = match.localParticipant?.player?.displayName {
@@ -169,13 +201,6 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             }
         } else {
             return nil
-        }
-    }
-    
-    
-    var turnNumberToDisplay = 0 {
-        didSet {
-            updateViewFromModel()
         }
     }
     
@@ -516,31 +541,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
-    func resignLocalPlayer() {
-        if let match = currentMatch {
-            if match.status != .ended && match.status != .unknown {
-                if let localParticipant = match.localParticipant {
-                    if localParticipant == match.currentParticipant {
-                        localParticipant.matchOutcome = .lost
-                        
-                        for participant in match.nonLocalParticipants {
-                            participant.matchOutcome = .won
-                        }
-                        
-                        match.endMatchInTurn(withMatch: match.matchData ?? Data()) { (err) -> Void in
-                            self.updateViewFromModel()
-                        }
-                    } else {
-                        if localParticipant.matchOutcome == .none {
-                            match.participantQuitOutOfTurn(with: .quit) { (err) -> Void in
-                                self.updateViewFromModel()
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+    
     
     // MARK: ViewController Lifecycle methods
     
@@ -724,8 +725,6 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     // MARK: GKLocalPlayerListener methods
     
     func player(_ player: GKPlayer, wantsToQuitMatch match: GKTurnBasedMatch) {
-        // need to write
-//        print("wantsToQuitMatch")
         for participant in match.participants {
             if participant.player == player {
                 participant.matchOutcome = .lost
@@ -734,12 +733,12 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             }
         }
         
-        match.endMatchInTurn(withMatch: match.matchData ?? Data())
+        match.endMatchInTurn(withMatch: match.matchData ?? Data()) { (err) -> Void in
+            self.updateViewFromModel()
+        }
     }
     
     func player(_ player: GKPlayer, receivedTurnEventFor match: GKTurnBasedMatch, didBecomeActive: Bool) {
-        print("receivedTurnEvent. didBecomeActive: \(didBecomeActive)")
-        
         if let matchmakerVC = currentMatchmakerViewController, didBecomeActive {
             currentMatchmakerViewController = nil
             matchmakerVC.dismiss(animated: true)
@@ -748,9 +747,6 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         if didBecomeActive || currentMatch?.matchID == match.matchID {
             loadMatchData(match: match)
         }
-        
-        print("localPlayerCanMakeTurn: \(localPlayerCanMakeTurn)")
-        //print("match.localParticipant?.matchOutcome: \(match.localParticipant?.matchOutcome.rawValue)")
         
         // End match if the other player quit
         if localPlayerCanMakeTurn {
