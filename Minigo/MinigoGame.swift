@@ -9,7 +9,7 @@
 import Foundation
 
 /*
- * An object that represents a game of go.
+ * A structure that represents a game of go.
  */
 struct MinigoGame
 {
