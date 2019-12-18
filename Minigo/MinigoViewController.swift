@@ -22,8 +22,8 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
                     }
                 }
             } else {
-                minigoMatchData = nil
                 turnNumberToDisplay = 0
+                minigoMatchData = nil
                 self.updateViewFromModel()
             }
         }
@@ -60,8 +60,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     private struct Constants {
         static let boardSize = 9
-        static let rewindAndFastForwardButtonsCornerRadius: CGFloat = 6.0
-        static let passButtonCornerRadius: CGFloat = 8.0
+        static let buttonsCornerRadius: CGFloat = 6.0
         static let fontSizeToButtonHeightRatio: CGFloat = 0.66
         static let fonstSizeToClockEmojiLabelHeightRatio: CGFloat = 0.9
     }
@@ -77,7 +76,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     @IBOutlet private weak var rewindButton: MinigoButton! {
         didSet {
-            rewindButton.layer.cornerRadius = Constants.rewindAndFastForwardButtonsCornerRadius
+            rewindButton.layer.cornerRadius = Constants.buttonsCornerRadius
             rewindButton.adjustsImageWhenHighlighted = false
             rewindButton.isEnabled = false
         }
@@ -85,7 +84,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     @IBOutlet private weak var fastForwardButton: MinigoButton! {
         didSet {
-            fastForwardButton.layer.cornerRadius = Constants.rewindAndFastForwardButtonsCornerRadius
+            fastForwardButton.layer.cornerRadius = Constants.buttonsCornerRadius
             fastForwardButton.adjustsImageWhenHighlighted = false
             fastForwardButton.isEnabled = false
         }
@@ -93,7 +92,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     @IBOutlet private weak var passButton: MinigoButton! {
         didSet {
-            passButton.layer.cornerRadius = Constants.passButtonCornerRadius
+            passButton.layer.cornerRadius = Constants.buttonsCornerRadius
             passButton.isEnabled = false
         }
     }
@@ -754,7 +753,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
         
         if didBecomeActive || currentMatch?.matchID == match.matchID {
-            loadMatchData(match: match)
+            currentMatch = match
         }
         
         // End match if the other player quit
@@ -775,16 +774,16 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
-    private func loadMatchData(match: GKTurnBasedMatch) {
-        currentMatch = match
-        match.loadMatchData() { data, error in
-            DispatchQueue.main.async {
-                self.minigoMatchData = data
-                self.turnNumberToDisplay = self.minigoGame.turnCount
-                self.updateViewFromModel()
-            }
-        }
-    }
+//    private func loadMatchData(match: GKTurnBasedMatch) {
+//        currentMatch = match
+//        match.loadMatchData() { data, error in
+//            DispatchQueue.main.async {
+//                self.minigoMatchData = data
+//                self.turnNumberToDisplay = self.minigoGame.turnCount
+//                self.updateViewFromModel()
+//            }
+//        }
+//    }
 }
 
 
