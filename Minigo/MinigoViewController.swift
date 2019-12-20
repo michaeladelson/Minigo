@@ -11,6 +11,7 @@ import GameKit
 
 class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatchmakerViewControllerDelegate, GKLocalPlayerListener
 {
+    // The current match displayed by the viewController.
     var currentMatch: GKTurnBasedMatch? {
         didSet {
             if let match = currentMatch {
@@ -29,28 +30,16 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
+    // The turn number of the currentMatch displayed by the viewController.
     var turnNumberToDisplay = 0 {
         didSet {
             updateViewFromModel()
         }
     }
     
-    private var minigoMatchData: Data? {
-        get {
-            return try? JSONEncoder().encode(minigoMatchState)
-        }
-        
-        set {
-            if let data = newValue, let matchState = try? JSONDecoder().decode(MinigoMatchState.self, from: data) {
-                minigoMatchState = matchState
-            } else {
-                minigoMatchState = MinigoMatchState(blackPlayerID: nil,
-                                                    whitePlayerID: nil,
-                                                    minigoMoveHistory: [MinigoGame.Point?]())
-            }
-        }
-    }
-    
+    /*
+     * A struct that represents the details of a Minígo match.
+     */
     private struct MinigoMatchState: Codable
     {
         let blackPlayerID: String?
@@ -124,6 +113,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     @IBOutlet private weak var resignBarButtonItem: UIBarButtonItem!
     
+    // The current GKTurnBasedMatchmakerViewController displayed.
     private weak var currentMatchmakerViewController: GKTurnBasedMatchmakerViewController?
     
     private var minigoGame = MinigoGame(boardSize: Constants.boardSize)
@@ -137,6 +127,22 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     private var blackPlayerID: String?
     private var whitePlayerID: String?
+    
+    private var minigoMatchData: Data? {
+        get {
+            return try? JSONEncoder().encode(minigoMatchState)
+        }
+        
+        set {
+            if let data = newValue, let matchState = try? JSONDecoder().decode(MinigoMatchState.self, from: data) {
+                minigoMatchState = matchState
+            } else {
+                minigoMatchState = MinigoMatchState(blackPlayerID: nil,
+                                                    whitePlayerID: nil,
+                                                    minigoMoveHistory: [MinigoGame.Point?]())
+            }
+        }
+    }
     
     private var minigoMatchState: MinigoMatchState {
         get {
@@ -285,6 +291,8 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
                 case .none:
                     if GKLocalPlayer.local != currentMatch?.currentParticipant?.player  {
                         return "Their Turn"
+                    } else if minigoGame.passCount == 1 {
+                        return "Passed Last Turn"
                     } else {
                         return ""
                     }
@@ -768,22 +776,9 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
                 match.endMatchInTurn(withMatch: match.matchData ?? Data()) { (err) -> Void in
                     self.updateViewFromModel()
                 }
-                
             }
-            
         }
     }
-    
-//    private func loadMatchData(match: GKTurnBasedMatch) {
-//        currentMatch = match
-//        match.loadMatchData() { data, error in
-//            DispatchQueue.main.async {
-//                self.minigoMatchData = data
-//                self.turnNumberToDisplay = self.minigoGame.turnCount
-//                self.updateViewFromModel()
-//            }
-//        }
-//    }
 }
 
 
