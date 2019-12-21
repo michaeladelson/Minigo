@@ -58,12 +58,12 @@ class BoardView: UIView {
     }
     
     override func draw(_ rect: CGRect) {
-        let boardBoarder = CGRect(x: upperLeftCorner.x,
+        let boardBoarderRect = CGRect(x: upperLeftCorner.x,
                              y: upperLeftCorner.y,
                              width: CGFloat(boardSize - 1) * lineSpacingWidthWise,
                              height: CGFloat(boardSize - 1) * lineSpacingHeightWise)
         
-        let path = UIBezierPath(rect: boardBoarder)
+        let path = UIBezierPath(rect: boardBoarderRect)
         
         for i in 1..<boardSize - 1 {
             path.move(to: upperLeftCorner.offset(by: CGPoint(x: CGFloat(i) * lineSpacingWidthWise, y: 0)))
