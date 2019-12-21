@@ -310,8 +310,6 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     }
     
     
-
-    
     private var boardIsInCurrentPosition: Bool {
         return turnNumberToDisplay == minigoGame.turnCount
     }
@@ -351,7 +349,20 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     }
 
     @IBAction private func resignLocalPlayer(_ sender: UIBarButtonItem) {
-        resignLocalPlayer()
+        if let match = currentMatch {
+            if match.status != .ended && match.status != .unknown {
+                let alert = UIAlertController(title: "Resign Match?",
+                                              message: nil,
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Resign",
+                                              style: .default,
+                                              handler: { (action: UIAlertAction) -> Void in self.resignLocalPlayer() }))
+                alert.addAction(UIAlertAction(title: "Cancel",
+                                              style: .default,
+                                              handler: nil))
+                present(alert, animated: true, completion: nil)
+            }
+        }
     }
     
     @objc private func tap(byHandlingGestureRecognizedBy recognizer: UITapGestureRecognizer) {
