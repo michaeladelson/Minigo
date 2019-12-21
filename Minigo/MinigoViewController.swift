@@ -235,6 +235,8 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
                 case .none:
                     if GKLocalPlayer.local == currentMatch?.currentParticipant?.player  {
                         return "Your Turn"
+                    } else if minigoGame.passCount == 1 {
+                        return "Passed Last Turn"
                     } else {
                         return ""
                     }
