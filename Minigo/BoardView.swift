@@ -58,19 +58,24 @@ class BoardView: UIView {
     }
     
     override func draw(_ rect: CGRect) {
-        let path = UIBezierPath()
+        let boardBoarder = CGRect(x: upperLeftCorner.x,
+                             y: upperLeftCorner.y,
+                             width: CGFloat(boardSize - 1) * lineSpacingWidthWise,
+                             height: CGFloat(boardSize - 1) * lineSpacingHeightWise)
         
-        for i in 0..<boardSize {
+        let path = UIBezierPath(rect: boardBoarder)
+        
+        for i in 1..<boardSize - 1 {
             path.move(to: upperLeftCorner.offset(by: CGPoint(x: CGFloat(i) * lineSpacingWidthWise, y: 0)))
             path.addLine(to: upperLeftCorner.offset(by: CGPoint(x: CGFloat(i) * lineSpacingWidthWise, y: CGFloat(boardSize - 1) * lineSpacingHeightWise)))
         }
         
-        for i in 0..<boardSize {
+        for i in 1..<boardSize - 1 {
             path.move(to: upperLeftCorner.offset(by: CGPoint(x: 0, y: CGFloat(i) * lineSpacingHeightWise)))
             path.addLine(to: upperLeftCorner.offset(by: CGPoint(x: CGFloat(boardSize - 1) * lineSpacingWidthWise, y: CGFloat(i) * lineSpacingHeightWise)))
         }
         
-        path.lineWidth = CGFloat(3.0)
+        path.lineWidth = Constants.boardGridLineWidth
         
         UIColor.black.setStroke()
         path.stroke()
@@ -91,6 +96,8 @@ class BoardView: UIView {
         static let boardSize = 9
         static let pointWidthToLineSpacingWidthWiseRatio: CGFloat = 0.99
         static let pointHeightToLineSpacingHeightWiseRatio: CGFloat = 0.99
+        static let boardGridLineWidth: CGFloat = 3.0
+        static let boardBackgroundColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
     }
     
     // The BoardViewPoints that appear on the board.
@@ -103,7 +110,7 @@ class BoardView: UIView {
     
     // Performs some set up work when called. The function is intended to be called when an instance of BoardView is instantiated.
     private func setUp() {
-        backgroundColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
+        backgroundColor = Constants.boardBackgroundColor
         contentMode = .redraw
         
         for _ in 0..<boardSize {
