@@ -48,6 +48,10 @@ struct MinigoGame
         return scoreOf(player: .white)
     }
     
+    var komi: Double {
+        return Constants.komi
+    }
+    
     var noncurrentPlayer: Player {
         switch currentPlayer {
         case .black:
@@ -84,7 +88,6 @@ struct MinigoGame
             }
         }
     }
-    
     
     var turnCount: Int {
         return _moveHistory.count
@@ -134,6 +137,7 @@ struct MinigoGame
     mutating func pass() {
         _ = placeStoneAt(point: nil)
     }
+    
     
     private struct Constants {
         static let komi = 0.0
