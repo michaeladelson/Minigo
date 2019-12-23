@@ -40,11 +40,11 @@ struct MinigoGame
     
     private(set) var boardHistory = [[[Player]]]()
     
-    var blackScore: Int {
+    var blackScore: Double {
         return scoreOf(player: .black)
     }
     
-    var whiteScore: Int {
+    var whiteScore: Double {
         return scoreOf(player: .white)
     }
     
@@ -103,8 +103,8 @@ struct MinigoGame
     }
     
     // Returns the score for player.
-    func scoreOf(player: Player) -> Int {
-        var score = 0
+    func scoreOf(player: Player) -> Double {
+        var score = 0.0
         
         if player != .none {
             let otherPlayer = (player == Player.black ? Player.white : Player.black)
@@ -115,7 +115,7 @@ struct MinigoGame
             
             let pointsThatContributeToScore = colorPoints + emptyPointsThatReachColor.filter( { !emptyPointsThatReachOtherColor.contains($0) } )
             
-            score = pointsThatContributeToScore.count
+            score = Double(pointsThatContributeToScore.count) + Constants.komi
         }
         
         return score
@@ -135,6 +135,9 @@ struct MinigoGame
         _ = placeStoneAt(point: nil)
     }
     
+    private struct Constants {
+        static let komi = 0.0
+    }
     
     private var blackPointsWithoutLiberties: [Point] {
         return pointsWithoutLiberties(withColor: .black)

@@ -207,12 +207,10 @@
                         <outlet property="fastForwardButton" destination="N4L-x6-ccW" id="Fjs-bd-iTm"/>
                         <outlet property="localPlayerColorView" destination="UDq-l6-yhc" id="npe-89-liY"/>
                         <outlet property="localPlayerNameLabel" destination="9Lq-51-KI1" id="Nqi-Vc-Ydo"/>
-                        <outlet property="localPlayerStackView" destination="rbw-1b-Tal" id="osR-UJ-woj"/>
                         <outlet property="localPlayerStatusLabel" destination="ls5-mG-oIn" id="eBi-J2-UJf"/>
                         <outlet property="menuBarButtonItem" destination="PW7-De-F1B" id="LO4-F3-4Yt"/>
                         <outlet property="nonLocalPlayerColorView" destination="R8I-Zj-lZn" id="M2A-qK-9ZV"/>
                         <outlet property="nonLocalPlayerNameLabel" destination="WR9-1Y-ZxY" id="ims-aW-qEa"/>
-                        <outlet property="nonLocalPlayerStackView" destination="LPA-Fr-0ni" id="Ejl-xd-Jox"/>
                         <outlet property="nonLocalPlayerStatusLabel" destination="XJH-oN-15i" id="dbd-PI-T8H"/>
                         <outlet property="passButton" destination="Mng-ET-xBx" id="F48-aP-8me"/>
                         <outlet property="resignBarButtonItem" destination="tgr-X0-ljp" id="9tL-6N-Jct"/>

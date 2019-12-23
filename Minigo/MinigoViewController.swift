@@ -48,7 +48,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
-    // Sets the board to show the current match position
+    // Sets the board to show the current match position.
     func setBoardToCurrentPosition() {
         turnNumberToDisplay = minigoGame.turnCount
     }
@@ -68,7 +68,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         static let boardSize = 9
         static let buttonsCornerRadius: CGFloat = 6.0
         static let fontSizeToButtonHeightRatio: CGFloat = 0.66
-        static let fonstSizeToClockEmojiLabelHeightRatio: CGFloat = 0.9
+        static let fontSizeToClockEmojiLabelHeightRatio: CGFloat = 0.9
     }
     
     @IBOutlet private weak var boardViewContainer: UIView! {
@@ -117,10 +117,6 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     @IBOutlet private weak var nonLocalPlayerColorView: BoardViewPoint!
     
-    @IBOutlet private weak var localPlayerStackView: UIStackView!
-    
-    @IBOutlet private weak var nonLocalPlayerStackView: UIStackView!
-    
     @IBOutlet private weak var clockEmojiLabel: UILabel!
     
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
@@ -132,6 +128,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     // The current GKTurnBasedMatchmakerViewController displayed.
     private weak var currentMatchmakerViewController: GKTurnBasedMatchmakerViewController?
     
+    // The model.
     private var minigoGame = MinigoGame(boardSize: Constants.boardSize)
     
     private var boardView: BoardView!
@@ -142,10 +139,10 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     // An observer that observes when the app is going to enter the foreground.
     private var willEnterForegroundObserver: NSObjectProtocol?
     
-    // The gamePlayerID of the GKPlayer playing black
+    // The gamePlayerID of the GKPlayer playing black.
     private var blackPlayerID: String?
     
-    // The gamePlayerID of the GKPlayer playing white
+    // The gamePlayerID of the GKPlayer playing white.
     private var whitePlayerID: String?
     
     // The match state of the current match.
@@ -183,6 +180,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
+    // The GKTurnBasedParticipant playing black.
     private var blackParticipant: GKTurnBasedParticipant? {
         if let id = blackPlayerID {
             if GKLocalPlayer.local.gamePlayerID == id {
@@ -195,6 +193,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
+    // The GKTurnBasedParticipant playing white.
     private var whiteParticipant: GKTurnBasedParticipant? {
         if let id = whitePlayerID {
             if GKLocalPlayer.local.gamePlayerID == id {
@@ -207,15 +206,17 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
+    // The GKPlayer playing black.
     private var blackPlayer: GKPlayer? {
         return blackParticipant?.player
     }
     
+    // The GKPlayer playing white.
     private var whitePlayer: GKPlayer? {
         return whiteParticipant?.player
     }
     
-    // The display name of the local player
+    // The display name of the local player.
     private var localPlayerName: String? {
         if let match = currentMatch {
             if let name = match.localParticipant?.player?.displayName {
@@ -228,7 +229,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
-    // The display name of the non-local player
+    // The display name of the non-local player.
     private var nonLocalPlayerName: String? {
         if let match = currentMatch {
             if let name = match.nonLocalParticipants.first?.player?.displayName {
@@ -724,7 +725,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         nonLocalPlayerNameLabel.font = nonLocalPlayerNameLabel.font.withSize(Constants.fontSizeToButtonHeightRatio * nonLocalPlayerNameLabel.frame.height)
         nonLocalPlayerStatusLabel.font = nonLocalPlayerStatusLabel.font.withSize(Constants.fontSizeToButtonHeightRatio * nonLocalPlayerStatusLabel.frame.height)
         
-        clockEmojiLabel.font = clockEmojiLabel.font.withSize(Constants.fonstSizeToClockEmojiLabelHeightRatio * clockEmojiLabel.frame.height)
+        clockEmojiLabel.font = clockEmojiLabel.font.withSize(Constants.fontSizeToClockEmojiLabelHeightRatio * clockEmojiLabel.frame.height)
         
     }
     
