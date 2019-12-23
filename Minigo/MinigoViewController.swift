@@ -26,13 +26,14 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
                     }
                 }
             } else {
-                turnNumberToDisplay = 0
                 minigoMatchData = nil
+                turnNumberToDisplay = 0
                 self.updateViewFromModel()
             }
         }
     }
     
+    // The number of turns that have been taken in the current match.
     var numberOfTurns: Int {
         return minigoGame.turnCount
     }
@@ -98,6 +99,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     @IBOutlet private weak var passButton: MinigoButton! {
         didSet {
             passButton.layer.cornerRadius = Constants.buttonsCornerRadius
+            passButton.adjustsImageWhenHighlighted = false
             passButton.isEnabled = false
         }
     }
@@ -160,7 +162,6 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             
             minigoGame.moveHistory = newValue.minigoMoveHistory
             
-            //this might be a good place to set player IDs
             setPlayerIDs()
         }
     }
@@ -348,6 +349,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
+    
     @IBAction private func selectMatch(_ sender: UIBarButtonItem) {
         presentGKTurnBasedMatchmakerViewController()
     }
@@ -400,6 +402,28 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
+    private func presentGKTurnBasedMatchmakerViewController() {
+        if GKLocalPlayer.local.isAuthenticated {
+            let request = GKMatchRequest()
+            request.minPlayers = 2
+            request.maxPlayers = 2
+            request.inviteMessage = "Would you like to play Minígo?"
+            let matchmakerViewController = GKTurnBasedMatchmakerViewController(matchRequest: request)
+            matchmakerViewController.turnBasedMatchmakerDelegate = self
+            currentMatchmakerViewController = matchmakerViewController
+            self.present(matchmakerViewController, animated: true, completion: nil)
+        } else {
+            print("!GKLocalPlayer.local.isAuthenticated")
+            let alert = UIAlertController(title: "Multiplayer Unavailable",
+                                          message: "Player is not signed in",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK",
+                                          style: .default,
+                                          handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
+    }
+    
     private func resignLocalPlayer() {
         if let match = currentMatch {
             if match.status != .ended && match.status != .unknown {
@@ -426,29 +450,6 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
-    private func presentGKTurnBasedMatchmakerViewController() {
-        if GKLocalPlayer.local.isAuthenticated {
-            let request = GKMatchRequest()
-            request.minPlayers = 2
-            request.maxPlayers = 2
-            request.inviteMessage = "Would you like to play Minígo?"
-            let matchmakerViewController = GKTurnBasedMatchmakerViewController(matchRequest: request)
-            matchmakerViewController.turnBasedMatchmakerDelegate = self
-            currentMatchmakerViewController = matchmakerViewController
-            self.present(matchmakerViewController, animated: true, completion: nil)
-        } else {
-            print("!GKLocalPlayer.local.isAuthenticated")
-            let alert = UIAlertController(title: "Multiplayer Unavailable",
-                                          message: "Player is not signed in",
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK",
-                                          style: .default,
-                                          handler: nil))
-            present(alert, animated: true, completion: nil)
-        }
-    }
-
-    
     private func endTurn() {
         guard let match = currentMatch else {
             return
@@ -467,7 +468,6 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             let currentPlayer = minigoGame.currentPlayer
             let noncurrentPlayer = minigoGame.noncurrentPlayer
             minigoGame.pass()
-            setBoardToCurrentPosition()
             
             if minigoGame.passCount < 2 {
                 endTurn()
@@ -504,7 +504,6 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             }
         }
     }
-    
     
     private func setPlayerIDs() {
         if currentMatch?.status != GKTurnBasedMatch.Status.ended && currentMatch?.status != GKTurnBasedMatch.Status.unknown {
