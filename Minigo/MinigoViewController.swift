@@ -9,6 +9,9 @@
 import UIKit
 import GameKit
 
+/*
+ * A user interface that allows a player to play a game of Go.
+ */
 class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatchmakerViewControllerDelegate, GKLocalPlayerListener
 {
     // The current match displayed by the viewController.
@@ -30,12 +33,25 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
-    // The turn number of the currentMatch displayed by the viewController.
+    var numberOfTurns: Int {
+        return minigoGame.turnCount
+    }
+    
+    /*
+     * The turn number of the current match displayed by the viewController.
+     * Must be greater than or equal to 0 and less than or equal to numberOfTurns.
+     */
     var turnNumberToDisplay = 0 {
         didSet {
             updateViewFromModel()
         }
     }
+    
+    // Sets the board to show the current match position
+    func setBoardToCurrentPosition() {
+        turnNumberToDisplay = minigoGame.turnCount
+    }
+    
     
     /*
      * A struct that represents the details of a Minígo match.
@@ -105,8 +121,6 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     @IBOutlet private weak var clockEmojiLabel: UILabel!
     
-    @IBOutlet private weak var buttonStackView: UIStackView!
-    
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet private weak var menuBarButtonItem: UIBarButtonItem!
@@ -120,30 +134,19 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     private var boardView: BoardView!
     
+    // An observer that observes when the isAuthenticated property of the shared local player object changes.
     private var authenticationChangedObserver: NSObjectProtocol?
+    
+    // An observer that observes when the app is going to enter the foreground.
     private var willEnterForegroundObserver: NSObjectProtocol?
     
-    
-    
+    // The gamePlayerID of the GKPlayer playing black
     private var blackPlayerID: String?
+    
+    // The gamePlayerID of the GKPlayer playing white
     private var whitePlayerID: String?
     
-    private var minigoMatchData: Data? {
-        get {
-            return try? JSONEncoder().encode(minigoMatchState)
-        }
-        
-        set {
-            if let data = newValue, let matchState = try? JSONDecoder().decode(MinigoMatchState.self, from: data) {
-                minigoMatchState = matchState
-            } else {
-                minigoMatchState = MinigoMatchState(blackPlayerID: nil,
-                                                    whitePlayerID: nil,
-                                                    minigoMoveHistory: [MinigoGame.Point?]())
-            }
-        }
-    }
-    
+    // The match state of the current match.
     private var minigoMatchState: MinigoMatchState {
         get {
             return MinigoMatchState(blackPlayerID: blackPlayerID,
@@ -159,6 +162,23 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             
             //this might be a good place to set player IDs
             setPlayerIDs()
+        }
+    }
+    
+    // The match state of the current match encoded as a Data instance
+    private var minigoMatchData: Data? {
+        get {
+            return try? JSONEncoder().encode(minigoMatchState)
+        }
+        
+        set {
+            if let data = newValue, let matchState = try? JSONDecoder().decode(MinigoMatchState.self, from: data) {
+                minigoMatchState = matchState
+            } else {
+                minigoMatchState = MinigoMatchState(blackPlayerID: nil,
+                                                    whitePlayerID: nil,
+                                                    minigoMoveHistory: [MinigoGame.Point?]())
+            }
         }
     }
     
@@ -194,6 +214,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         return whiteParticipant?.player
     }
     
+    // The display name of the local player
     private var localPlayerName: String? {
         if let match = currentMatch {
             if let name = match.localParticipant?.player?.displayName {
@@ -205,7 +226,21 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             return nil
         }
     }
+    
+    // The display name of the non-local player
+    private var nonLocalPlayerName: String? {
+        if let match = currentMatch {
+            if let name = match.nonLocalParticipants.first?.player?.displayName {
+                return name
+            } else {
+                return "Anonoymous"
+            }
+        } else {
+            return nil
+        }
+    }
 
+    // The MinigoGame.Player that the local player is playing as in the current game.
     private var localPlayerColor: MinigoGame.Player? {
         if let localPlayerID = currentMatch?.localParticipant?.player?.gamePlayerID {
             if localPlayerID == blackPlayerID {
@@ -220,6 +255,22 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
+    // The MinigoGame.Player of the non-local player.
+    private var nonLocalPlayerColor: MinigoGame.Player? {
+        if let localPlayerID = currentMatch?.localParticipant?.player?.gamePlayerID {
+            if localPlayerID == blackPlayerID {
+                return .white
+            } else if localPlayerID == whitePlayerID {
+                return .black
+            } else {
+                return nil
+            }
+        } else {
+            return nil
+        }
+    }
+    
+    // A String that displays the status of the local player.
     private var localPlayerStatus: String? {
         if let match = currentMatch {
             if let localPlayerMatchOutcome = match.localParticipant?.matchOutcome {
@@ -250,34 +301,8 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             return nil
         }
     }
-    
-    private var nonLocalPlayerName: String? {
-        if let match = currentMatch {
-            if let name = match.nonLocalParticipants.first?.player?.displayName {
-                return name
-            } else {
-                return "Anonoymous"
-            }
-        } else {
-            return nil
-        }
-    }
-    
-    private var nonLocalPlayerColor: MinigoGame.Player? {
-        if let localPlayerID = currentMatch?.localParticipant?.player?.gamePlayerID {
-            if localPlayerID == blackPlayerID {
-                return .white
-            } else if localPlayerID == whitePlayerID {
-                return .black
-            } else {
-                return nil
-            }
-        } else {
-            return nil
-        }
-    }
-    
 
+    // The MinigoGame.Player that the non-local player is playing as in the current game.
     private var nonLocalPlayerStatus: String? {
         if let match = currentMatch {
             if let nonLocalPlayerMatchOutcome = match.nonLocalParticipants.first?.matchOutcome {
@@ -309,13 +334,12 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
-    
+    // A Boolean value indicating whether the current match position is being displayed.
     private var boardIsInCurrentPosition: Bool {
         return turnNumberToDisplay == minigoGame.turnCount
     }
     
-    
-    
+    // A Boolean value indicating whether the local player can make a move.
     private var localPlayerCanMakeTurn: Bool {
         if let match = currentMatch {
             return GKLocalPlayer.local.isAuthenticated && GKLocalPlayer.local == match.currentParticipant?.player
@@ -546,11 +570,6 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
-    private func setBoardToCurrentPosition() {
-        turnNumberToDisplay = minigoGame.turnCount
-    }
-    
-    
     private func setAuthenticationHandler() {
         GKLocalPlayer.local.authenticateHandler = { (vc, err) in
             print("d")
@@ -705,8 +724,6 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         
         nonLocalPlayerNameLabel.font = nonLocalPlayerNameLabel.font.withSize(Constants.fontSizeToButtonHeightRatio * nonLocalPlayerNameLabel.frame.height)
         nonLocalPlayerStatusLabel.font = nonLocalPlayerStatusLabel.font.withSize(Constants.fontSizeToButtonHeightRatio * nonLocalPlayerStatusLabel.frame.height)
-        
-//        buttonStackView.layoutIfNeeded()
         
         clockEmojiLabel.font = clockEmojiLabel.font.withSize(Constants.fonstSizeToClockEmojiLabelHeightRatio * clockEmojiLabel.frame.height)
         

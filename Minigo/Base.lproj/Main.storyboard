@@ -203,7 +203,6 @@
                     <connections>
                         <outlet property="activityIndicator" destination="wwT-dx-b9S" id="rts-RB-wE3"/>
                         <outlet property="boardViewContainer" destination="74Q-Ha-bS0" id="XTq-8d-Tp5"/>
-                        <outlet property="buttonStackView" destination="dLU-g1-Gi9" id="x19-Ri-Oov"/>
                         <outlet property="clockEmojiLabel" destination="TUn-Qg-EGk" id="PEa-dF-YWv"/>
                         <outlet property="fastForwardButton" destination="N4L-x6-ccW" id="Fjs-bd-iTm"/>
                         <outlet property="localPlayerColorView" destination="UDq-l6-yhc" id="npe-89-liY"/>
