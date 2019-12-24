@@ -257,7 +257,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
-    // The MinigoGame.Player of the non-local player.
+    // The MinigoGame.Player that the non-local player is playing as in the current game.
     private var nonLocalPlayerColor: MinigoGame.Player? {
         if let localPlayerID = currentMatch?.localParticipant?.player?.gamePlayerID {
             if localPlayerID == blackPlayerID {
@@ -274,61 +274,53 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     // A String that displays the status of the local player.
     private var localPlayerStatus: String? {
-        if let match = currentMatch {
-            if let localPlayerMatchOutcome = match.localParticipant?.matchOutcome {
-                switch localPlayerMatchOutcome {
-                case .won:
-                    return "You Won"
-                case .lost:
-                    return "You Lost"
-                case .tied:
-                    return "You Tied"
-                case .quit:
-                    return "You Quit"
-                case .none:
-                    if GKLocalPlayer.local == currentMatch?.currentParticipant?.player  {
-                        return "Your Turn"
-                    } else if minigoGame.passCount == 1 {
-                        return "Passed Last Turn"
-                    } else {
-                        return ""
-                    }
-                default:
-                    return nil
+        if let localPlayerMatchOutcome = currentMatch?.localParticipant?.matchOutcome {
+            switch localPlayerMatchOutcome {
+            case .won:
+                return "You Won"
+            case .lost:
+                return "You Lost"
+            case .tied:
+                return "You Tied"
+            case .quit:
+                return "You Quit"
+            case .none:
+                if GKLocalPlayer.local == currentMatch?.currentParticipant?.player  {
+                    return "Your Turn"
+                } else if minigoGame.passCount == 1 {
+                    return "Passed Last Turn"
+                } else {
+                    return ""
                 }
-            } else {
+            default:
                 return nil
             }
         } else {
             return nil
         }
     }
-
-    // The MinigoGame.Player that the non-local player is playing as in the current game.
+    
+    // A String that displays the status of the non-local player.
     private var nonLocalPlayerStatus: String? {
-        if let match = currentMatch {
-            if let nonLocalPlayerMatchOutcome = match.nonLocalParticipants.first?.matchOutcome {
-                switch nonLocalPlayerMatchOutcome {
-                case .won:
-                    return "They Won"
-                case .lost:
-                    return "They Lost"
-                case .tied:
-                    return "They Tied"
-                case .quit:
-                    return "They Quit"
-                case .none:
-                    if GKLocalPlayer.local != currentMatch?.currentParticipant?.player  {
-                        return "Their Turn"
-                    } else if minigoGame.passCount == 1 {
-                        return "Passed Last Turn"
-                    } else {
-                        return ""
-                    }
-                default:
-                    return nil
+        if let nonLocalPlayerMatchOutcome = currentMatch?.nonLocalParticipants.first?.matchOutcome {
+            switch nonLocalPlayerMatchOutcome {
+            case .won:
+                return "They Won"
+            case .lost:
+                return "They Lost"
+            case .tied:
+                return "They Tied"
+            case .quit:
+                return "They Quit"
+            case .none:
+                if GKLocalPlayer.local != currentMatch?.currentParticipant?.player  {
+                    return "Their Turn"
+                } else if minigoGame.passCount == 1 {
+                    return "Passed Last Turn"
+                } else {
+                    return ""
                 }
-            } else {
+            default:
                 return nil
             }
         } else {
