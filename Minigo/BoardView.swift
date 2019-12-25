@@ -13,7 +13,10 @@ import UIKit
  */
 protocol BoardViewDelegate: class
 {
+    // Tells the delegate a point on the board has been selected.
     func didSelectPointAt(_ boardView: BoardView, row: Int, column: Int)
+    
+    // Asks the delegate for the color of a point on the board.
     func getColorForPointAt(_ boardView: BoardView, row: Int, column: Int) -> BoardViewPoint.PointColor
 }
 
@@ -132,13 +135,9 @@ class BoardView: UIView {
     @objc private func selectPoint(byHandlingGestureRecognizedBy recognizer: UITapGestureRecognizer) {
         switch recognizer.state {
         case .ended:
-            if let viewOfRecognizer = recognizer.view {
-                if let point = viewOfRecognizer as? BoardViewPoint {
-                    if let (row, column) = getRowAndColumnOf(point: point) {
-                        delegate?.didSelectPointAt(self, row: row, column: column)
-                        updateColorForAllPoints()
-                    }
-                }
+            if let viewOfRecognizer = recognizer.view, let point = viewOfRecognizer as? BoardViewPoint, let (row, column) = getRowAndColumnOf(point: point) {
+                delegate?.didSelectPointAt(self, row: row, column: column)
+                updateColorForAllPoints()
             }
         default: break
         }

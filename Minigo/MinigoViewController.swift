@@ -342,23 +342,26 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
-    
+    // Presents a GKTurnBasedMatchmakerViewController
     @IBAction private func selectMatch(_ sender: UIBarButtonItem) {
         presentGKTurnBasedMatchmakerViewController()
     }
     
+    // Shows the board position of the previous turn
     @IBAction private func rewind() {
         if turnNumberToDisplay > 0 {
             turnNumberToDisplay -= 1
         }
     }
     
+    // Shows the board position of the next turn
     @IBAction private func fastForward() {
         if turnNumberToDisplay < minigoGame.turnCount {
             turnNumberToDisplay += 1
         }
     }
     
+    // Passes the local player's turn
     @IBAction private func pass(_ sender: UIButton) {
         if boardIsInCurrentPosition {
             pass()
@@ -366,24 +369,28 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             setBoardToCurrentPosition()
         }
     }
-
+    
+    // Resigns the local player from the current match.
     @IBAction private func resignLocalPlayer(_ sender: UIBarButtonItem) {
-        if let match = currentMatch {
-            if match.status != .ended && match.status != .unknown {
-                let alert = UIAlertController(title: "Resign Match?",
-                                              message: nil,
-                                              preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Resign",
-                                              style: .default,
-                                              handler: { (action: UIAlertAction) -> Void in self.resignLocalPlayer() }))
-                alert.addAction(UIAlertAction(title: "Cancel",
-                                              style: .default,
-                                              handler: nil))
-                present(alert, animated: true, completion: nil)
-            }
+        guard let match = currentMatch else {
+            return
+        }
+        
+        if match.status != .ended && match.status != .unknown {
+            let alert = UIAlertController(title: "Resign Match?",
+                                          message: nil,
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Resign",
+                                          style: .default,
+                                          handler: { (action: UIAlertAction) -> Void in self.resignLocalPlayer() }))
+            alert.addAction(UIAlertAction(title: "Cancel",
+                                          style: .default,
+                                          handler: nil))
+            present(alert, animated: true, completion: nil)
         }
     }
     
+    // Sets the board to the current position
     @objc private func tap(byHandlingGestureRecognizedBy recognizer: UITapGestureRecognizer) {
         switch recognizer.state {
         case .ended:
@@ -395,6 +402,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
+    // Presents a GKTurnBasedMatchmakerViewController
     private func presentGKTurnBasedMatchmakerViewController() {
         if GKLocalPlayer.local.isAuthenticated {
             let request = GKMatchRequest()
@@ -406,7 +414,6 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             currentMatchmakerViewController = matchmakerViewController
             self.present(matchmakerViewController, animated: true, completion: nil)
         } else {
-            print("!GKLocalPlayer.local.isAuthenticated")
             let alert = UIAlertController(title: "Multiplayer Unavailable",
                                           message: "Player is not signed in",
                                           preferredStyle: .alert)
@@ -417,25 +424,28 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
+    // Resigns the local player from the current match.
     private func resignLocalPlayer() {
-        if let match = currentMatch {
-            if match.status != .ended && match.status != .unknown {
-                if let localParticipant = match.localParticipant {
-                    if localParticipant == match.currentParticipant {
-                        localParticipant.matchOutcome = .lost
-                        
-                        for participant in match.nonLocalParticipants {
-                            participant.matchOutcome = .won
-                        }
-                        
-                        match.endMatchInTurn(withMatch: match.matchData ?? Data()) { (err) -> Void in
+        guard let match = currentMatch else {
+            return
+        }
+        
+        if match.status != .ended && match.status != .unknown {
+            if let localParticipant = match.localParticipant {
+                if localParticipant == match.currentParticipant {
+                    localParticipant.matchOutcome = .lost
+                    
+                    for participant in match.nonLocalParticipants {
+                        participant.matchOutcome = .won
+                    }
+                    
+                    match.endMatchInTurn(withMatch: match.matchData ?? Data()) { (err) -> Void in
+                        self.updateViewFromModel()
+                    }
+                } else {
+                    if localParticipant.matchOutcome == .none {
+                        match.participantQuitOutOfTurn(with: .quit) { (err) -> Void in
                             self.updateViewFromModel()
-                        }
-                    } else {
-                        if localParticipant.matchOutcome == .none {
-                            match.participantQuitOutOfTurn(with: .quit) { (err) -> Void in
-                                self.updateViewFromModel()
-                            }
                         }
                     }
                 }
@@ -443,6 +453,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
+    // Ends the current player's turn and updates the data stored on Game Center for the current match
     private func endTurn() {
         guard let match = currentMatch else {
             return
@@ -456,6 +467,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
+    // Passes the local player's turn.
     private func pass() {
         if localPlayerCanMakeTurn {
             let currentPlayer = minigoGame.currentPlayer
@@ -465,6 +477,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             if minigoGame.passCount < 2 {
                 endTurn()
             } else {
+                // End the match
                 if let match = currentMatch {
                     let currentPlayerScore = minigoGame.scoreOf(player: currentPlayer)
                     let nonCurrentPlayerScore = minigoGame.scoreOf(player: noncurrentPlayer)
@@ -498,6 +511,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
+    // Sets blackPlayerID and whitePlayerID
     private func setPlayerIDs() {
         if currentMatch?.status != GKTurnBasedMatch.Status.ended && currentMatch?.status != GKTurnBasedMatch.Status.unknown {
             if GKLocalPlayer.local == currentMatch?.currentParticipant?.player {
