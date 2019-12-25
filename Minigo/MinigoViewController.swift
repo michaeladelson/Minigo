@@ -559,6 +559,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         resignBarButtonItem.isEnabled = (currentMatch != nil && currentMatch?.status != .ended)
     }
     
+    //
     private func pointColor(for player: MinigoGame.Player) -> BoardViewPoint.PointColor {
         switch player {
         case .black:
@@ -570,25 +571,14 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
+    // Sets GKLocalPlayer.local.authenticateHandler
     private func setAuthenticationHandler() {
         GKLocalPlayer.local.authenticateHandler = { (vc, err) in
-            print("d")
             if let authVC = vc {
-                print("a")
-                print("vc != nil: \(vc != nil)")
-                print("self.definesPresentationContext: \(self.definesPresentationContext)")
-                self.present(authVC, animated: true, completion: {print("test test test")})
-            } else if GKLocalPlayer.local.isAuthenticated {
-                print("b")
-            } else {
-//                print("c")
+                self.present(authVC, animated: true, completion: nil)
             }
-            
-            self.menuBarButtonItem.isEnabled = true
-            self.activityIndicator.stopAnimating()
         }
     }
-    
     
     
     // MARK: ViewController Lifecycle methods
@@ -635,6 +625,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     override func viewWillAppear(_ animated: Bool) {
         print("test0")
         super.viewWillAppear(animated)
+        
         authenticationChangedObserver = NotificationCenter.default.addObserver(
             forName: .GKPlayerAuthenticationDidChangeNotificationName,
             object: nil,
