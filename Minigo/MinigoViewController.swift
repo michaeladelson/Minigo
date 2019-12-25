@@ -686,12 +686,6 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-//        localPlayerColorViewWidthConstraint.constant = boardView.pointSize.width
-//        nonLocalPlayerColorViewWidthConstraint.constant = boardView.pointSize.width
-    }
-    
     override func viewDidLayoutSubviews() {
         //the following prints are for testing
 //        print("localPlayerCanMakeTurn: \(localPlayerCanMakeTurn)") //just for testing

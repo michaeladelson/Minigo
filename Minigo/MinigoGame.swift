@@ -140,7 +140,7 @@ struct MinigoGame
     
     
     private struct Constants {
-        static let komi = 0.0
+        static let komi = 5.5
     }
     
     private var blackPointsWithoutLiberties: [Point] {
