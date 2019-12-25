@@ -514,12 +514,18 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     // Sets blackPlayerID and whitePlayerID
     private func setPlayerIDs() {
         if currentMatch?.status != GKTurnBasedMatch.Status.ended && currentMatch?.status != GKTurnBasedMatch.Status.unknown {
-            if minigoGame.currentPlayer == .black {
-                blackPlayerID = currentMatch?.currentParticipant?.player?.gamePlayerID
-                whitePlayerID = currentMatch?.nonCurrentParticipants.first?.player?.gamePlayerID
-            } else if minigoGame.currentPlayer == .white {
-                blackPlayerID = currentMatch?.nonCurrentParticipants.first?.player?.gamePlayerID
-                whitePlayerID = currentMatch?.currentParticipant?.player?.gamePlayerID
+            if GKLocalPlayer.local == currentMatch?.currentParticipant?.player {
+                if minigoGame.currentPlayer == .black {
+                    blackPlayerID = GKLocalPlayer.local.gamePlayerID
+                } else if minigoGame.currentPlayer == .white {
+                    whitePlayerID = GKLocalPlayer.local.gamePlayerID
+                }
+            } else {
+                if minigoGame.currentPlayer == .black {
+                    whitePlayerID = GKLocalPlayer.local.gamePlayerID
+                } else if minigoGame.currentPlayer == .white {
+                    blackPlayerID = GKLocalPlayer.local.gamePlayerID
+                }
             }
         }
     }
@@ -561,7 +567,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
-    // Gives the BoardViewPoint.PointColor that corresponds to a given MinigoGame.Player
+    // Gives the BoardViewPoint.PointColor that corresponds to a given MinigoGame.Player.
     private func pointColor(for player: MinigoGame.Player) -> BoardViewPoint.PointColor {
         switch player {
         case .black:
@@ -594,38 +600,16 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         resignBarButtonItem.isEnabled = (currentMatch != nil && currentMatch?.status != .ended)
         
         if GKLocalPlayer.local.isAuthenticated {
-            self.activityIndicator.stopAnimating()
+            activityIndicator.stopAnimating()
         }
         
         setAuthenticationHandler()
         
-//        print("localPlayerColor == nil: \(localPlayerColor == nil)")
-//        print("currentMatch == nil: \(currentMatch == nil)")
-//        print("blackPlayerID == whitePlayerID: \(blackPlayerID == whitePlayerID)")
-//        print("nil == nil: \(nil == nil)")
-        
-//        rewindButton.isEnabled = false
-//       rewindButton.alpha = 0.2
-//        fastForwardButton.isEnabled = false
-//        fastForwardButton.alpha = 0.2
-//        passButton.isEnabled = false
-        
-//        let horizontalSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(pass(byHandlingGestureRecognizedBy:)))
-//        horizontalSwipeGestureRecognizer.direction = [.left,.right]
-//
-//        let verticalSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(pass(byHandlingGestureRecognizedBy:)))
-//        verticalSwipeGestureRecognizer.direction = [.up,.down]
-        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tap(byHandlingGestureRecognizedBy:)))
-
-//        view.addGestureRecognizer(horizontalSwipeGestureRecognizer)
-//        view.addGestureRecognizer(verticalSwipeGestureRecognizer)
         view.addGestureRecognizer(tapGestureRecognizer)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("test0")
         super.viewWillAppear(animated)
         
         authenticationChangedObserver = NotificationCenter.default.addObserver(
@@ -649,6 +633,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             queue: OperationQueue.main) { notification in
                 // set the current match to nil if the local player is not a participant in the current match
                 print("willEnterForegroundNotification test")
+                
                 if let match = self.currentMatch {
                     print("test2")
                     var players = [GKPlayer]()
@@ -748,7 +733,6 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     // MARK: GKTurnBasedMatchmakerViewControllerDelegate methods
     
-    
     func turnBasedMatchmakerViewControllerWasCancelled(_ viewController: GKTurnBasedMatchmakerViewController) {
         viewController.dismiss(animated: true)
     }
@@ -796,6 +780,12 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
                     self.updateViewFromModel()
                 }
             }
+        }
+    }
+    
+    func player(_ player: GKPlayer, matchEnded match: GKTurnBasedMatch) {
+        if currentMatch?.matchID == match.matchID {
+            currentMatch = match
         }
     }
 }
