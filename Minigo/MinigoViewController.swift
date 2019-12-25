@@ -595,6 +595,8 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        overrideUserInterfaceStyle = .light
 
         menuBarButtonItem.isEnabled = GKLocalPlayer.local.isAuthenticated
         resignBarButtonItem.isEnabled = (currentMatch != nil && currentMatch?.status != .ended)
