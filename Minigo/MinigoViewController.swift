@@ -721,9 +721,9 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     // MARK: BoardViewDelegate methods
     
     func getColorForPointAt(_ boardView: BoardView, row: Int, column: Int) -> BoardViewPoint.PointColor {
-        let pieceColor = minigoGame.boardHistory[turnNumberToDisplay][row][column]
+        let stoneColor = minigoGame.boardHistory[turnNumberToDisplay][row][column]
         
-        switch pieceColor {
+        switch stoneColor {
         case .black:
             return .black
         case .white:
