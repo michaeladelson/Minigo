@@ -514,18 +514,12 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     // Sets blackPlayerID and whitePlayerID
     private func setPlayerIDs() {
         if currentMatch?.status != GKTurnBasedMatch.Status.ended && currentMatch?.status != GKTurnBasedMatch.Status.unknown {
-            if GKLocalPlayer.local == currentMatch?.currentParticipant?.player {
-                if minigoGame.currentPlayer == .black {
-                    blackPlayerID = GKLocalPlayer.local.gamePlayerID
-                } else if minigoGame.currentPlayer == .white {
-                    whitePlayerID = GKLocalPlayer.local.gamePlayerID
-                }
-            } else {
-                if minigoGame.currentPlayer == .black {
-                    whitePlayerID = GKLocalPlayer.local.gamePlayerID
-                } else if minigoGame.currentPlayer == .white {
-                    blackPlayerID = GKLocalPlayer.local.gamePlayerID
-                }
+            if minigoGame.currentPlayer == .black {
+                blackPlayerID = currentMatch?.currentParticipant?.player?.gamePlayerID
+                whitePlayerID = currentMatch?.nonCurrentParticipants.first?.player?.gamePlayerID
+            } else if minigoGame.currentPlayer == .white {
+                blackPlayerID = currentMatch?.nonCurrentParticipants.first?.player?.gamePlayerID
+                whitePlayerID = currentMatch?.currentParticipant?.player?.gamePlayerID
             }
         }
     }
