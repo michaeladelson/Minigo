@@ -524,6 +524,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
+    // Updates the view to reflect the current state of the model.
     private func updateViewFromModel() {
         localPlayerNameLabel.text = localPlayerName ?? ""
         localPlayerStatusLabel.text = localPlayerStatus ?? ""
