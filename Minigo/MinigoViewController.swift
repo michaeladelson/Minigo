@@ -528,18 +528,15 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         localPlayerNameLabel.text = localPlayerName ?? ""
         localPlayerStatusLabel.text = localPlayerStatus ?? ""
         localPlayerColorView.color = pointColor(for: localPlayerColor ?? .none)
-        //localPlayerColorView.frame.size = boardView.pointSize
         
         nonLocalPlayerNameLabel.text = nonLocalPlayerName ?? ""
         nonLocalPlayerStatusLabel.text = nonLocalPlayerStatus ?? ""
         nonLocalPlayerColorView.color = pointColor(for: nonLocalPlayerColor ?? .none)
-        //nonLocalPlayerColorView.frame.size = boardView.pointSize
         
         boardView.updateColorForAllPoints()
         
         if turnNumberToDisplay == 0 {
             rewindButton.isEnabled = false
-            print("rewindButton.alpha: \(rewindButton.alpha)")
         } else {
             rewindButton.isEnabled = true
         }
@@ -556,10 +553,14 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             passButton.isEnabled = false
         }
         
-        resignBarButtonItem.isEnabled = (currentMatch != nil && currentMatch?.status != .ended)
+        if currentMatch != nil && currentMatch?.status != .ended {
+            resignBarButtonItem.isEnabled = true
+        } else {
+            resignBarButtonItem.isEnabled = false
+        }
     }
     
-    //
+    // Gives the BoardViewPoint.PointColor that corresponds to a given MinigoGame.Player
     private func pointColor(for player: MinigoGame.Player) -> BoardViewPoint.PointColor {
         switch player {
         case .black:
@@ -571,7 +572,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
-    // Sets GKLocalPlayer.local.authenticateHandler
+    // Sets GKLocalPlayer.local.authenticateHandler.
     private func setAuthenticationHandler() {
         GKLocalPlayer.local.authenticateHandler = { (vc, err) in
             if let authVC = vc {
