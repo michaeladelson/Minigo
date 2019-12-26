@@ -621,9 +621,9 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
                     self.setPlayerIDs()
                     self.menuBarButtonItem.isEnabled = true
                     self.activityIndicator.stopAnimating()
-//                    self.presentGKTurnBasedMatchmakerViewController()
                 } else {
                     GKLocalPlayer.local.unregisterAllListeners()
+                    self.currentMatch = nil
                 }
         }
         
@@ -631,29 +631,21 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             forName: UIApplication.willEnterForegroundNotification,
             object: UIApplication.shared,
             queue: OperationQueue.main) { notification in
-                // set the current match to nil if the local player is not a participant in the current match
-                print("willEnterForegroundNotification test")
-                
+                // Set the current match to nil if the local player is not a player in the current match.
                 if let match = self.currentMatch {
-                    print("test2")
                     var players = [GKPlayer]()
 
                     for participant in match.participants {
                         if let player = participant.player {
                             players.append(player)
-                            print("testtesttest")
                         }
                     }
 
                     if !players.contains(GKLocalPlayer.local) {
-                        print("contains(GKLocalPlayer.local)")
                         self.currentMatch = nil
-                        self.minigoGame = MinigoGame(boardSize: Constants.boardSize)
-                        self.turnNumberToDisplay = 0
-                        self.updateViewFromModel()
                     }
                 }
-        }
+            }
         
         updateViewFromModel()
     }
