@@ -411,7 +411,6 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
             request.inviteMessage = "Would you like to play Minígo?"
             let matchmakerViewController = GKTurnBasedMatchmakerViewController(matchRequest: request)
             matchmakerViewController.turnBasedMatchmakerDelegate = self
-            matchmakerViewController.overrideUserInterfaceStyle = .light
             currentMatchmakerViewController = matchmakerViewController
             self.present(matchmakerViewController, animated: true, completion: nil)
         } else {
