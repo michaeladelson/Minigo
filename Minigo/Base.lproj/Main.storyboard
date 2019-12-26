@@ -212,7 +212,7 @@
                         <outlet property="nonLocalPlayerColorView" destination="R8I-Zj-lZn" id="M2A-qK-9ZV"/>
                         <outlet property="nonLocalPlayerNameLabel" destination="WR9-1Y-ZxY" id="ims-aW-qEa"/>
                         <outlet property="nonLocalPlayerStatusLabel" destination="XJH-oN-15i" id="dbd-PI-T8H"/>
-                        <outlet property="passButton" destination="Mng-ET-xBx" id="F48-aP-8me"/>
+                        <outlet property="passButton" destination="Mng-ET-xBx" id="UKZ-TO-BJD"/>
                         <outlet property="resignBarButtonItem" destination="tgr-X0-ljp" id="9tL-6N-Jct"/>
                         <outlet property="rewindButton" destination="mJS-6c-KGA" id="5NZ-1B-9FN"/>
                     </connections>

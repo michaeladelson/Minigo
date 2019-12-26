@@ -35,7 +35,7 @@ class MinigoButton: UIButton {
         super.layoutSubviews()
         
         if titleLabel != nil {
-            titleLabel!.font = titleLabel!.font.withSize(Constants.fontSizeToHeightRatio * frame.height)
+            titleLabel!.font = titleLabel!.font.withSize(Constants.fontSizeToHeightRatio * bounds.height)
         }
     }
     

@@ -67,7 +67,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     private struct Constants {
         static let boardSize = 9
         static let buttonsCornerRadius: CGFloat = 6.0
-        static let fontSizeToButtonHeightRatio: CGFloat = 0.66
+        static let fontSizeToLabelHeightRatio: CGFloat = 0.66
         static let fontSizeToClockEmojiLabelHeightRatio: CGFloat = 0.9
     }
     
@@ -664,35 +664,16 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
     }
     
     override func viewDidLayoutSubviews() {
-        //the following prints are for testing
-//        print("localPlayerCanMakeTurn: \(localPlayerCanMakeTurn)") //just for testing
-//        print("GKLocalPlayer.local.isAuthenticated: \(GKLocalPlayer.local.isAuthenticated)")  //just for testing
-//
-//        print("localPlayerDisplayName: \(GKLocalPlayer.local.displayName)")
-        
-        if let match = currentMatch {
-            print(match.status.rawValue)
-        }
-        print(localPlayerStatus ?? "")
-        print(nonLocalPlayerStatus ?? "")
-        print("localPlayerNameLabel.adjustsFontSizeToFitWidth: \(localPlayerNameLabel.adjustsFontSizeToFitWidth)")
-        
-        print("blackPlayerID == nil: \(blackPlayerID == nil)")
-        
         super.viewDidLayoutSubviews()
         boardView.frame = boardViewContainer.bounds
         
-//        localPlayerStackView.layoutIfNeeded()
-//        nonLocalPlayerStackView.layoutIfNeeded()
+        localPlayerNameLabel.font = localPlayerNameLabel.font.withSize(Constants.fontSizeToLabelHeightRatio * localPlayerNameLabel.bounds.height)
+        localPlayerStatusLabel.font = localPlayerStatusLabel.font.withSize(Constants.fontSizeToLabelHeightRatio * localPlayerStatusLabel.bounds.height)
         
-        localPlayerNameLabel.font = localPlayerNameLabel.font.withSize(Constants.fontSizeToButtonHeightRatio * localPlayerNameLabel.frame.height)
-        localPlayerStatusLabel.font = localPlayerStatusLabel.font.withSize(Constants.fontSizeToButtonHeightRatio * localPlayerStatusLabel.frame.height)
+        nonLocalPlayerNameLabel.font = nonLocalPlayerNameLabel.font.withSize(Constants.fontSizeToLabelHeightRatio * nonLocalPlayerNameLabel.bounds.height)
+        nonLocalPlayerStatusLabel.font = nonLocalPlayerStatusLabel.font.withSize(Constants.fontSizeToLabelHeightRatio * nonLocalPlayerStatusLabel.bounds.height)
         
-        nonLocalPlayerNameLabel.font = nonLocalPlayerNameLabel.font.withSize(Constants.fontSizeToButtonHeightRatio * nonLocalPlayerNameLabel.frame.height)
-        nonLocalPlayerStatusLabel.font = nonLocalPlayerStatusLabel.font.withSize(Constants.fontSizeToButtonHeightRatio * nonLocalPlayerStatusLabel.frame.height)
-        
-        clockEmojiLabel.font = clockEmojiLabel.font.withSize(Constants.fontSizeToClockEmojiLabelHeightRatio * clockEmojiLabel.frame.height)
-        
+        clockEmojiLabel.font = clockEmojiLabel.font.withSize(Constants.fontSizeToClockEmojiLabelHeightRatio * clockEmojiLabel.bounds.height)
     }
     
     // MARK: BoardViewDelegate methods
