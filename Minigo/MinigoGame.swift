@@ -1,6 +1,6 @@
 //
 //  MinigoGame.swift
-//  Minígo
+//  Minigo
 //
 //  Created by Michael Adelson on 9/6/19.
 //  Copyright © 2019 Michael L. Adelson. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  Utilities.swift
-//  Go
+//  Minigo
 //
 //  Created by Michael Adelson on 8/8/19.
 //  Copyright © 2019 Michael L. Adelson. All rights reserved.
