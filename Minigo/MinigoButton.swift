@@ -10,6 +10,8 @@ import UIKit
 
 /*
  * A button used as part of the Minígo user interface.
+ * These buttons change their alpha value when highlighted or disabled and automatically adjust
+ * their font size depending on the button height.
  */
 class MinigoButton: UIButton {
 
