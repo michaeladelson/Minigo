@@ -118,7 +118,11 @@ struct MinigoGame
             
             let pointsThatContributeToScore = colorPoints + emptyPointsThatReachColor.filter( { !emptyPointsThatReachOtherColor.contains($0) } )
             
-            score = Double(pointsThatContributeToScore.count) + Constants.komi
+            score = Double(pointsThatContributeToScore.count)
+                
+            if player == Player.white {
+                score += Constants.komi
+            }
         }
         
         return score
