@@ -453,7 +453,7 @@ class MinigoViewController: UIViewController, BoardViewDelegate, GKTurnBasedMatc
         }
     }
     
-    // Ends the current player's turn and updates the data stored on Game Center for the current match
+    // Ends the current player's turn and updates the data stored on Game Center for the current match.
     private func endTurn() {
         guard let match = currentMatch else {
             return
