@@ -6,5 +6,6 @@ FEATURES
 
 - 9x9 board
 - 5.5 point komi
+- Area scoring
 - Play against friends or discover new opponents through Game Center
 
