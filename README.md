@@ -7,4 +7,5 @@ FEATURES
 - 9x9 board
 - Area scoring
 - 5.5 point komi
+- Situational superko
 - Play against friends or discover new opponents through Game Center
