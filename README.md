@@ -18,4 +18,4 @@ Minígo uses Apple's Game Center service to enable users to play against friends
 
 SUPPORT
 
-Bugs can be reported and feature requests can be submitted at https://github.com/michaeladelson/Minigo/issues.
+Support issues can be submitted at https://github.com/michaeladelson/Minigo/issues.
