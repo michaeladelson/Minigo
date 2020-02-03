@@ -5,7 +5,7 @@ Minígo is an iOS app for playing Go on a 9x9 board with friends.
 FEATURES
 
 - 9x9 board
-- Play turn-based matches through Game Center
+- Turn-based matches through Game Center
 - Play against friends or discover new opponents
 - Area scoring
 - 5.5 point komi
